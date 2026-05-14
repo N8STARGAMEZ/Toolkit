@@ -1,0 +1,2616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToolKit ✦</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --pink: #F472B6; --pink-l: #FCE7F3; --pink-d: #BE185D;
+  --teal: #2DD4BF; --teal-l: #CCFBF1; --teal-d: #0F766E;
+  --purple: #A78BFA; --purple-l: #EDE9FE; --purple-d: #6D28D9;
+  --amber: #FBBF24; --amber-l: #FEF3C7; --amber-d: #B45309;
+  --blue: #60A5FA; --blue-l: #DBEAFE; --blue-d: #1D4ED8;
+  --green: #34D399; --green-l: #D1FAE5; --green-d: #047857;
+  --coral: #FB923C; --coral-l: #FFEDD5; --coral-d: #C2410C;
+  --slate: #94A3B8; --slate-l: #F1F5F9; --slate-d: #475569;
+  --rose: #F43F5E; --rose-l: #FFE4E6; --rose-d: #BE123C;
+  --sky: #38BDF8; --sky-l: #E0F2FE; --sky-d: #0369A1;
+  --bg: #F4F0FF;
+  --sidebar-bg: #FFFFFF;
+  --card: #FFFFFF;
+  --text: #1E1B4B;
+  --muted: #6B7280;
+  --light: #9CA3AF;
+  --border: #EDE9FE;
+  --sidebar-w: 240px;
+  --header-h: 64px;
+}
+
+html, body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ── LAYOUT ── */
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--header-h) 1fr;
+  height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  grid-column: 1 / -1;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 20px;
+  z-index: 10;
+}
+.logo {
+  font-size: 20px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7C3AED, #EC4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+.search-wrap {
+  flex: 1;
+  max-width: 440px;
+  position: relative;
+}
+.search-wrap input {
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 14px 9px 38px;
+  font-size: 14px;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-wrap input:focus { border-color: var(--purple); }
+.search-wrap .s-icon {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 16px; color: var(--light);
+}
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+.header-badge {
+  background: var(--purple-l); color: var(--purple-d);
+  border-radius: 10px; padding: 5px 14px; font-size: 13px; font-weight: 700;
+}
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, #C4B5FD, #F9A8D4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+}
+.sidebar-section {
+  font-size: 10px; font-weight: 800; color: var(--light);
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 12px 10px 6px;
+}
+.nav-btn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 14px; cursor: pointer;
+  border: none; background: transparent; width: 100%;
+  font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
+  color: var(--muted); transition: all 0.15s; text-align: left;
+}
+.nav-btn:hover { background: var(--bg); color: var(--text); }
+.nav-btn.active { background: var(--purple-l); color: var(--purple-d); }
+.nav-icon { font-size: 20px; width: 24px; text-align: center; }
+.nav-dot {
+  margin-left: auto; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--purple);
+}
+
+/* ── MAIN ── */
+.main {
+  overflow-y: auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── HOME ── */
+.home-hero {
+  background: linear-gradient(135deg, #C4B5FD 0%, #F9A8D4 55%, #86EFAC 100%);
+  border-radius: 24px;
+  padding: 32px 36px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.home-hero::before {
+  content: ''; position: absolute; top: -50px; right: -50px;
+  width: 200px; height: 200px; background: rgba(255,255,255,0.15); border-radius: 50%;
+}
+.home-hero::after {
+  content: ''; position: absolute; bottom: -30px; right: 220px;
+  width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%;
+}
+.hero-text { position: relative; z-index: 1; }
+.hero-title { font-size: 30px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+.hero-sub { font-size: 15px; color: rgba(255,255,255,0.88); margin-top: 6px; }
+.hero-stats { display: flex; gap: 28px; margin-top: 20px; }
+.hero-stat-val { font-size: 26px; font-weight: 900; color: #fff; }
+.hero-stat-lbl { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 1px; }
+.hero-bubbles { position: relative; z-index: 1; display: flex; gap: 12px; }
+.hero-bubble {
+  width: 64px; height: 64px; border-radius: 20px;
+  background: rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+.hero-bubble:hover { background: rgba(255,255,255,0.45); transform: scale(1.08); }
+
+/* GRID HEADINGS */
+.grid-heading { font-size: 17px; font-weight: 800; color: var(--text); }
+
+/* TOOL GRID */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.tool-card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 22px 20px;
+  cursor: pointer;
+  border: none; text-align: left;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.tool-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.tool-card::after {
+  content: ''; position: absolute;
+  bottom: -20px; right: -20px;
+  width: 80px; height: 80px; border-radius: 50%; opacity: 0.12;
+}
+.tool-icon { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+.tool-name { font-size: 15px; font-weight: 800; color: var(--text); }
+.tool-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.tool-arrow { margin-top: auto; font-size: 18px; color: var(--light); align-self: flex-end; }
+
+.t-pink .tool-icon { background: var(--pink-l); } .t-pink::after { background: var(--pink); }
+.t-teal .tool-icon { background: var(--teal-l); } .t-teal::after { background: var(--teal); }
+.t-purple .tool-icon { background: var(--purple-l); } .t-purple::after { background: var(--purple); }
+.t-amber .tool-icon { background: var(--amber-l); } .t-amber::after { background: var(--amber); }
+.t-blue .tool-icon { background: var(--blue-l); } .t-blue::after { background: var(--blue); }
+.t-green .tool-icon { background: var(--green-l); } .t-green::after { background: var(--green); }
+.t-coral .tool-icon { background: var(--coral-l); } .t-coral::after { background: var(--coral); }
+.t-slate .tool-icon { background: var(--slate-l); } .t-slate::after { background: var(--slate); }
+.t-rose .tool-icon { background: var(--rose-l); } .t-rose::after { background: var(--rose); }
+.t-sky .tool-icon { background: var(--sky-l); } .t-sky::after { background: var(--sky); }
+
+/* RECENTS ROW */
+.recents-row { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; }
+.recents-row::-webkit-scrollbar { display: none; }
+.recent-chip {
+  background: var(--card); border-radius: 14px; padding: 12px 18px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer;
+  flex-shrink: 0; border: none; font-family: 'Nunito', sans-serif;
+  transition: transform 0.12s;
+}
+.recent-chip:hover { transform: scale(1.03); }
+.recent-chip span:first-child { font-size: 20px; }
+.recent-chip span:last-child { font-size: 13px; font-weight: 700; color: var(--text); }
+
+/* ── TOOL DETAIL PAGE ── */
+.tool-page { display: none; flex-direction: column; gap: 0; }
+.tool-page.active { display: flex; }
+
+.tool-page-hero {
+  border-radius: 24px;
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 20px;
+  position: relative; overflow: hidden;
+  margin-bottom: 0;
+}
+.tool-page-hero::before {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px; background: rgba(255,255,255,0.15); border-radius: 50%;
+}
+.tp-icon { font-size: 44px; }
+.tp-title { font-size: 28px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+.tp-sub { font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 4px; }
+.back-btn {
+  margin-left: auto; background: rgba(255,255,255,0.25); border: none;
+  border-radius: 14px; padding: 9px 18px; color: #fff; font-size: 14px;
+  font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer;
+  position: relative; z-index: 1;
+  transition: background 0.15s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.38); }
+
+.tool-workspace {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+.tool-panel {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  display: flex; flex-direction: column; gap: 18px;
+}
+.result-panel {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+/* FORM ELEMENTS */
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field-label { font-size: 11px; font-weight: 800; color: var(--light); letter-spacing: 0.7px; text-transform: uppercase; }
+.nice-input {
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 13px;
+  padding: 12px 16px; font-size: 15px; font-family: 'Nunito', sans-serif;
+  color: var(--text); outline: none; width: 100%;
+  transition: border-color 0.2s;
+}
+.nice-input:focus { border-color: var(--purple); background: #fff; }
+.nice-select {
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 13px;
+  padding: 12px 16px; font-size: 15px; font-family: 'Nunito', sans-serif;
+  color: var(--text); outline: none; appearance: none; width: 100%; cursor: pointer;
+}
+.nice-select:focus { border-color: var(--purple); }
+.nice-textarea {
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 13px;
+  padding: 12px 16px; font-size: 14px; font-family: 'Nunito', sans-serif;
+  color: var(--text); outline: none; resize: vertical; width: 100%; min-height: 140px;
+  line-height: 1.6;
+}
+.nice-textarea:focus { border-color: var(--purple); background: #fff; }
+.action-btn {
+  background: linear-gradient(135deg, #7C3AED, #C026D3); color: #fff;
+  border: none; border-radius: 14px; padding: 13px 20px;
+  font-size: 15px; font-weight: 800; font-family: 'Nunito', sans-serif;
+  cursor: pointer; transition: opacity 0.15s, transform 0.12s; width: 100%;
+}
+.action-btn:hover { opacity: 0.9; }
+.action-btn:active { transform: scale(0.98); }
+.secondary-btn {
+  background: var(--bg); color: var(--text);
+  border: 1.5px solid var(--border); border-radius: 14px; padding: 11px 18px;
+  font-size: 14px; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer;
+  transition: background 0.15s;
+}
+.secondary-btn:hover { background: var(--purple-l); border-color: var(--purple); color: var(--purple-d); }
+
+.toggle-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.toggle-btn {
+  flex: 1; background: var(--bg); border: 1.5px solid var(--border); border-radius: 11px;
+  padding: 9px 12px; font-size: 13px; font-weight: 700; color: var(--muted);
+  font-family: 'Nunito', sans-serif; cursor: pointer; transition: all 0.15s; min-width: 60px;
+}
+.toggle-btn:hover { border-color: var(--purple); color: var(--purple-d); }
+.toggle-btn.sel { background: var(--text); color: #fff; border-color: var(--text); }
+.counter-row { display: flex; align-items: center; gap: 14px; }
+.counter-btn {
+  width: 42px; height: 42px; background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 12px; font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-weight: 700;
+  font-family: 'Nunito', sans-serif; color: var(--text);
+  transition: background 0.15s;
+}
+.counter-btn:hover { background: var(--purple-l); border-color: var(--purple); }
+.counter-val { font-size: 22px; font-weight: 900; color: var(--text); flex: 1; text-align: center; }
+
+/* RESULT ELEMENTS */
+.res-big { font-size: 42px; font-weight: 900; color: var(--text); letter-spacing: -1px; }
+.res-label { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.res-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.res-row:last-child { border-bottom: none; }
+.res-key { font-size: 14px; color: var(--muted); font-weight: 600; }
+.res-val { font-size: 15px; font-weight: 800; color: var(--text); }
+.res-card {
+  background: var(--bg); border-radius: 16px; padding: 18px 20px;
+  border: 1.5px solid var(--border);
+}
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat-box {
+  background: var(--bg); border-radius: 14px; padding: 16px;
+  border: 1.5px solid var(--border);
+}
+.stat-num { font-size: 26px; font-weight: 900; color: var(--text); }
+.stat-lbl { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 600; }
+
+/* SWITCH */
+.switch { position: relative; display: inline-block; width: 46px; height: 26px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider-sw {
+  position: absolute; cursor: pointer; inset: 0;
+  background: #D1D5DB; border-radius: 26px; transition: 0.2s;
+}
+.slider-sw:before {
+  position: absolute; content: ''; height: 20px; width: 20px;
+  left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+input:checked + .slider-sw { background: #7C3AED; }
+input:checked + .slider-sw:before { transform: translateX(20px); }
+
+.option-row {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--bg); border-radius: 13px; padding: 13px 16px;
+  border: 1.5px solid var(--border);
+}
+.option-lbl { font-size: 14px; font-weight: 700; color: var(--text); }
+
+/* BMI */
+.bmi-bar { height: 10px; border-radius: 8px; background: linear-gradient(to right,#60A5FA,#34D399,#FBBF24,#F87171); position: relative; }
+.bmi-marker {
+  position: absolute; top: -5px; width: 20px; height: 20px;
+  background: var(--text); border-radius: 50%; border: 3px solid #fff;
+  transform: translateX(-50%); transition: left 0.4s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* COLOR */
+.color-preview { width: 100%; height: 100px; border-radius: 16px; transition: background 0.2s; }
+.swatch-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.swatch {
+  width: 36px; height: 36px; border-radius: 11px; cursor: pointer;
+  transition: transform 0.12s; border: 2px solid transparent;
+}
+.swatch:hover { transform: scale(1.15); }
+
+/* PASSWORD */
+.pass-display {
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 13px;
+  padding: 14px 16px; font-size: 16px; font-weight: 700;
+  font-family: monospace; word-break: break-all; line-height: 1.6;
+  color: var(--text); min-height: 64px;
+}
+.strength-bar { height: 8px; border-radius: 8px; transition: all 0.3s; }
+
+/* UNIT SWAP */
+.swap-btn {
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 12px;
+  width: 42px; height: 42px; font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  align-self: flex-end; margin-bottom: 1px;
+  transition: background 0.15s;
+}
+.swap-btn:hover { background: var(--purple-l); border-color: var(--purple); }
+
+/* HIGHLIGHT VALUE */
+.accent-val { color: #7C3AED; }
+
+/* PANEL HEADING */
+.panel-heading { font-size: 16px; font-weight: 800; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 14px; }
+
+/* BASE64 */
+.mono-display {
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 13px;
+  padding: 14px 16px; font-size: 13px; font-family: monospace;
+  word-break: break-all; line-height: 1.7; color: var(--text); min-height: 100px;
+}
+
+/* COPY BTN */
+.copy-btn {
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 11px;
+  padding: 8px 16px; font-size: 13px; font-weight: 700; color: var(--muted);
+  font-family: 'Nunito', sans-serif; cursor: pointer; transition: all 0.15s;
+}
+.copy-btn:hover { background: var(--purple-l); border-color: var(--purple); color: var(--purple-d); }
+
+
+/* ── PROFILE MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(30,27,75,0.35); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: #fff; border-radius: 28px;
+  padding: 36px; width: 100%; max-width: 400px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+  transform: translateY(16px); transition: transform 0.2s;
+  position: relative;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 10px; width: 32px; height: 32px;
+  font-size: 16px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  color: var(--muted); transition: background 0.15s;
+}
+.modal-close:hover { background: var(--purple-l); color: var(--purple-d); }
+.modal-title { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+.modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.modal-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+.modal-tab {
+  flex: 1; padding: 10px; border-radius: 12px; border: 1.5px solid var(--border);
+  background: var(--bg); font-family: 'Nunito', sans-serif; font-size: 14px;
+  font-weight: 700; color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.modal-tab.active { background: var(--purple-l); border-color: var(--purple); color: var(--purple-d); }
+.modal-form { display: flex; flex-direction: column; gap: 14px; }
+.modal-error {
+  background: var(--rose-l); border: 1.5px solid #FCA5A5; border-radius: 12px;
+  padding: 10px 14px; font-size: 13px; color: var(--rose-d); font-weight: 600;
+  display: none;
+}
+.modal-success {
+  background: var(--green-l); border: 1.5px solid #6EE7B7; border-radius: 12px;
+  padding: 10px 14px; font-size: 13px; color: var(--green-d); font-weight: 600;
+  display: none;
+}
+/* Logged-in profile view */
+.profile-avatar-lg {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, #C4B5FD, #F9A8D4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; margin: 0 auto 16px;
+}
+.profile-name { font-size: 20px; font-weight: 900; color: var(--text); text-align: center; }
+.profile-email { font-size: 13px; color: var(--muted); text-align: center; margin-top: 4px; margin-bottom: 24px; }
+/* Avatar logged-in state */
+.avatar.logged-in { background: linear-gradient(135deg, #7C3AED, #C026D3); color: #fff; font-size: 14px; font-weight: 900; }
+
+
+/* ═══════════════════════════════════════
+   MOBILE RESPONSIVE (≤ 768px)
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Layout: stack vertically, no sidebar */
+  .shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-h) 1fr auto;
+    height: 100dvh;
+  }
+
+  /* Hide desktop sidebar */
+  .sidebar { display: none; }
+
+  /* Header tweaks */
+  .header { padding: 0 16px; gap: 12px; }
+  .header-badge { display: none; }
+  .search-wrap { max-width: none; }
+
+  /* Main area */
+  .main {
+    padding: 16px;
+    gap: 16px;
+    overflow-y: auto;
+    /* Leave room for bottom nav */
+    padding-bottom: 84px;
+  }
+
+  /* Hero */
+  .home-hero { padding: 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .hero-title { font-size: 22px; }
+  .hero-sub { font-size: 13px; }
+  .hero-stats { gap: 20px; margin-top: 12px; }
+  .hero-stat-val { font-size: 20px; }
+  .hero-bubbles { width: 100%; justify-content: flex-start; }
+  .hero-bubble { width: 52px; height: 52px; font-size: 22px; border-radius: 16px; }
+
+  /* Tool grid: 2 columns on mobile */
+  .tool-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tool-card { padding: 16px 14px; gap: 10px; }
+  .tool-icon { width: 40px; height: 40px; font-size: 20px; border-radius: 12px; }
+  .tool-name { font-size: 13px; }
+  .tool-desc { display: none; }
+  .tool-arrow { display: none; }
+
+  /* Tool workspace: single column */
+  .tool-workspace {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  /* Tool page hero */
+  .tool-page-hero { padding: 18px 20px; border-radius: 20px; }
+  .tp-title { font-size: 20px; }
+  .tp-sub { font-size: 12px; }
+  .tp-icon { font-size: 32px; }
+  .back-btn { padding: 8px 14px; font-size: 13px; }
+
+  /* Panels */
+  .tool-panel, .result-panel { padding: 18px; border-radius: 16px; }
+
+  /* Result big number */
+  .res-big { font-size: 32px; }
+
+  /* Stat grid: 2 cols */
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Toggle rows: wrap nicely */
+  .toggle-row { gap: 6px; }
+  .toggle-btn { padding: 8px 10px; font-size: 12px; min-width: 48px; }
+
+  /* Recents row */
+  .recent-chip { padding: 10px 14px; }
+  .recent-chip span:last-child { font-size: 12px; }
+
+  /* Grid heading */
+  .grid-heading { font-size: 15px; }
+
+  /* Modal */
+  .modal { padding: 28px 20px; border-radius: 24px; margin: 16px; max-width: none; width: calc(100% - 32px); }
+
+  /* Word counter workspace */
+  #page-word .tool-workspace { grid-template-columns: 1fr; }
+}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  padding: 8px 4px 12px;
+  z-index: 50;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+.mobile-nav-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  background: none; border: none; cursor: pointer;
+  font-family: 'Nunito', sans-serif; padding: 6px 4px;
+  border-radius: 12px; transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-nav-btn:active { background: var(--purple-l); }
+.mobile-nav-btn.active .mnav-icon { background: var(--purple-l); }
+.mobile-nav-btn.active .mnav-label { color: var(--purple-d); }
+.mnav-icon {
+  width: 44px; height: 32px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; transition: background 0.15s;
+}
+.mnav-label { font-size: 10px; font-weight: 700; color: var(--muted); }
+
+/* Mobile nav drawer (full tool list) */
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+}
+.mobile-drawer.open { display: block; }
+.mobile-drawer-overlay {
+  position: absolute; inset: 0;
+  background: rgba(30,27,75,0.3);
+  backdrop-filter: blur(2px);
+}
+.mobile-drawer-panel {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-radius: 24px 24px 0 0;
+  padding: 16px 16px 32px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.mobile-drawer-handle {
+  width: 40px; height: 4px; background: var(--border);
+  border-radius: 4px; margin: 0 auto 20px;
+}
+.mobile-drawer-section {
+  font-size: 10px; font-weight: 800; color: var(--light);
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 10px 8px 6px;
+}
+.mobile-drawer-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px; margin-bottom: 4px;
+}
+.mobile-drawer-item {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  background: var(--bg); border: none; border-radius: 14px;
+  padding: 12px 8px; cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s;
+}
+.mobile-drawer-item:active { background: var(--purple-l); }
+.mobile-drawer-item span:first-child { font-size: 22px; }
+.mobile-drawer-item span:last-child { font-size: 11px; font-weight: 700; color: var(--text); text-align: center; line-height: 1.3; }
+
+@media (max-width: 768px) {
+  .mobile-nav { display: grid; }
+}
+
+/* PAGE VISIBILITY */
+.page { display: none; }
+.page.active { display: flex; flex-direction: column; gap: 20px; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">ToolKit ✦</div>
+    <div class="search-wrap">
+      <span class="s-icon">🔍</span>
+      <input type="text" placeholder="Search tools..." id="search-inp" oninput="filterTools(this.value)">
+    </div>
+    <div class="header-right">
+      <div class="header-badge">14 Tools</div>
+      <button class="avatar" id="avatar-btn" onclick="openProfileModal()" title="Profile">🌸</button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">Navigation</div>
+    <button class="nav-btn active" onclick="showHome(this)"><span class="nav-icon">🏠</span> Home <span class="nav-dot"></span></button>
+
+    <div class="sidebar-section">Calculate</div>
+    <button class="nav-btn" onclick="openTool('tip',this)"><span class="nav-icon">🍽️</span> Tip Calculator</button>
+    <button class="nav-btn" onclick="openTool('loan',this)"><span class="nav-icon">🏦</span> Loan Calculator</button>
+    <button class="nav-btn" onclick="openTool('discount',this)"><span class="nav-icon">🏷️</span> Discount Calc</button>
+    <button class="nav-btn" onclick="openTool('bmi',this)"><span class="nav-icon">💪</span> BMI Checker</button>
+    <button class="nav-btn" onclick="openTool('age',this)"><span class="nav-icon">🎂</span> Age Calculator</button>
+
+    <div class="sidebar-section">Convert & Create</div>
+    <button class="nav-btn" onclick="openTool('unit',this)"><span class="nav-icon">⚖️</span> Unit Converter</button>
+    <button class="nav-btn" onclick="openTool('word',this)"><span class="nav-icon">📝</span> Word Counter</button>
+
+    <div class="sidebar-section">Security</div>
+    <button class="nav-btn" onclick="openTool('password',this)"><span class="nav-icon">🔐</span> Password Gen</button>
+    <button class="nav-btn" onclick="openTool('base64',this)"><span class="nav-icon">🔤</span> Base64 Coder</button>
+    <button class="nav-btn" onclick="openTool('hash',this)"><span class="nav-icon">🔒</span> Hash Generator</button>
+
+    <div class="sidebar-section">World</div>
+    <button class="nav-btn" onclick="openTool('currency',this)"><span class="nav-icon">💱</span> Currency Conv.</button>
+    <button class="nav-btn" onclick="openTool('timezone',this)"><span class="nav-icon">🌍</span> Time Zone Conv.</button>
+
+    <div class="sidebar-section">Design</div>
+    <button class="nav-btn" onclick="openTool('color',this)"><span class="nav-icon">🎨</span> Color Picker</button>
+    <button class="nav-btn" onclick="openTool('gradient',this)"><span class="nav-icon">🌈</span> Gradient Gen</button>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+      <div class="home-hero">
+        <div class="hero-text">
+          <div class="hero-title">Your everyday toolkit ✦</div>
+          <div class="hero-sub">Fast, beautiful utilities — all in one place</div>
+          <div class="hero-stats">
+            <div><div class="hero-stat-val">14</div><div class="hero-stat-lbl">Tools</div></div>
+            <div><div class="hero-stat-val">6</div><div class="hero-stat-lbl">Categories</div></div>
+            <div><div class="hero-stat-val">∞</div><div class="hero-stat-lbl">Uses</div></div>
+          </div>
+        </div>
+        <div class="hero-bubbles">
+          <div class="hero-bubble" onclick="openTool('unit')">⚖️</div>
+          <div class="hero-bubble" onclick="openTool('color')">🎨</div>
+          <div class="hero-bubble" onclick="openTool('password')">🔐</div>
+        </div>
+      </div>
+
+      <div class="grid-heading">⚡ Quick Access</div>
+      <div class="recents-row">
+        <button class="recent-chip" onclick="openTool('tip')"><span>🍽️</span><span>Tip Calculator</span></button>
+        <button class="recent-chip" onclick="openTool('unit')"><span>⚖️</span><span>Unit Converter</span></button>
+        <button class="recent-chip" onclick="openTool('color')"><span>🎨</span><span>Color Picker</span></button>
+        <button class="recent-chip" onclick="openTool('password')"><span>🔐</span><span>Password Gen</span></button>
+        <button class="recent-chip" onclick="openTool('bmi')"><span>💪</span><span>BMI Checker</span></button>
+        <button class="recent-chip" onclick="openTool('word')"><span>📝</span><span>Word Counter</span></button>
+        <button class="recent-chip" onclick="openTool('age')"><span>🎂</span><span>Age Calculator</span></button>
+      </div>
+
+      <div class="grid-heading">🛠️ All Tools</div>
+      <div class="tool-grid" id="all-tools-grid">
+        <button class="tool-card t-pink" onclick="openTool('tip')">
+          <div class="tool-icon">🍽️</div>
+          <div class="tool-name">Tip Calculator</div>
+          <div class="tool-desc">Split bills and calculate tips instantly across any group size.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-teal" onclick="openTool('unit')">
+          <div class="tool-icon">⚖️</div>
+          <div class="tool-name">Unit Converter</div>
+          <div class="tool-desc">Convert length, weight, temperature, speed and volume.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-purple" onclick="openTool('password')">
+          <div class="tool-icon">🔐</div>
+          <div class="tool-name">Password Generator</div>
+          <div class="tool-desc">Create strong, secure passwords with custom rules.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-blue" onclick="openTool('loan')">
+          <div class="tool-icon">🏦</div>
+          <div class="tool-name">Loan Calculator</div>
+          <div class="tool-desc">Monthly payments, total cost and interest breakdown.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-green" onclick="openTool('bmi')">
+          <div class="tool-icon">💪</div>
+          <div class="tool-name">BMI Checker</div>
+          <div class="tool-desc">Calculate body mass index in metric or imperial units.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-coral" onclick="openTool('word')">
+          <div class="tool-icon">📝</div>
+          <div class="tool-name">Word Counter</div>
+          <div class="tool-desc">Count words, characters, sentences and reading time.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-slate" onclick="openTool('age')">
+          <div class="tool-icon">🎂</div>
+          <div class="tool-name">Age Calculator</div>
+          <div class="tool-desc">Precise age in years, months, weeks and days.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-rose" onclick="openTool('discount')">
+          <div class="tool-icon">🏷️</div>
+          <div class="tool-name">Discount Calculator</div>
+          <div class="tool-desc">Find sale prices and how much you're saving.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-sky" onclick="openTool('base64')">
+          <div class="tool-icon">🔤</div>
+          <div class="tool-name">Base64 Coder</div>
+          <div class="tool-desc">Encode and decode text to and from Base64 format.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-purple" onclick="openTool('hash')">
+          <div class="tool-icon">🔒</div>
+          <div class="tool-name">Hash Generator</div>
+          <div class="tool-desc">Generate MD5, SHA-1, SHA-256 and SHA-512 hashes instantly.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-green" onclick="openTool('currency')">
+          <div class="tool-icon">💱</div>
+          <div class="tool-name">Currency Converter</div>
+          <div class="tool-desc">Convert between 30+ world currencies with indicative rates.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-blue" onclick="openTool('timezone')">
+          <div class="tool-icon">🌍</div>
+          <div class="tool-name">Time Zone Converter</div>
+          <div class="tool-desc">Live clocks across cities worldwide — convert any time.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-pink" onclick="openTool('gradient')">
+          <div class="tool-icon">🌈</div>
+          <div class="tool-name">Gradient Generator</div>
+          <div class="tool-desc">Build beautiful CSS gradients and copy the code instantly.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+        <button class="tool-card t-amber" onclick="openTool('color')">
+          <div class="tool-icon">🎨</div>
+          <div class="tool-name">Color Picker</div>
+          <div class="tool-desc">Pick colors and convert between HEX, RGB and HSL.</div>
+          <div class="tool-arrow">→</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- TIP -->
+    <div class="page" id="page-tip">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#F472B6,#FB7185)">
+        <span class="tp-icon">🍽️</span>
+        <div><div class="tp-title">Tip Calculator</div><div class="tp-sub">Split bills easily across any group</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Bill Details</div>
+          <div class="field"><div class="field-label">Bill Amount ($)</div>
+            <input class="nice-input" type="number" id="t-bill" value="60" oninput="calcTip()">
+          </div>
+          <div class="field"><div class="field-label">Tip Percentage</div>
+            <div class="toggle-row">
+              <button class="toggle-btn" onclick="setTip(10,this)">10%</button>
+              <button class="toggle-btn sel" onclick="setTip(15,this)">15%</button>
+              <button class="toggle-btn" onclick="setTip(18,this)">18%</button>
+              <button class="toggle-btn" onclick="setTip(20,this)">20%</button>
+              <button class="toggle-btn" onclick="setTip(25,this)">25%</button>
+            </div>
+          </div>
+          <div class="field"><div class="field-label">Split Between</div>
+            <div class="counter-row">
+              <button class="counter-btn" onclick="adjPeople(-1)">−</button>
+              <div class="counter-val" id="t-pcount">2</div>
+              <button class="counter-btn" onclick="adjPeople(1)">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Breakdown</div>
+          <div class="res-card">
+            <div class="res-big accent-val" id="r-pp">$34.50</div>
+            <div class="res-label">per person</div>
+          </div>
+          <div class="res-row"><span class="res-key">Tip amount</span><span class="res-val" id="r-tip">$9.00</span></div>
+          <div class="res-row"><span class="res-key">Total bill</span><span class="res-val" id="r-total">$69.00</span></div>
+          <div class="res-row"><span class="res-key">Each person pays</span><span class="res-val accent-val" id="r-pp2">$34.50</span></div>
+          <div class="res-row"><span class="res-key">Tip per person</span><span class="res-val" id="r-tipp">$4.50</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UNIT -->
+    <div class="page" id="page-unit">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#2DD4BF,#34D399)">
+        <span class="tp-icon">⚖️</span>
+        <div><div class="tp-title">Unit Converter</div><div class="tp-sub">Any measurement, instantly</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Conversion</div>
+          <div class="field"><div class="field-label">Category</div>
+            <select class="nice-select" id="u-cat" onchange="loadUnitPairs()">
+              <option value="length">📏 Length</option>
+              <option value="weight">⚖️ Weight</option>
+              <option value="temp">🌡️ Temperature</option>
+              <option value="speed">💨 Speed</option>
+              <option value="volume">💧 Volume</option>
+            </select>
+          </div>
+          <div class="field"><div class="field-label">Value to Convert</div>
+            <input class="nice-input" type="number" id="u-val" value="1" oninput="doConvert()">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end">
+            <div class="field"><div class="field-label">From</div><select class="nice-select" id="u-from" onchange="doConvert()"></select></div>
+            <button class="swap-btn" onclick="swapUnits()">⇄</button>
+            <div class="field"><div class="field-label">To</div><select class="nice-select" id="u-to" onchange="doConvert()"></select></div>
+          </div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Result</div>
+          <div class="res-card">
+            <div class="res-big accent-val" id="u-result">—</div>
+            <div class="res-label" id="u-result-lbl">Enter a value to convert</div>
+          </div>
+          <div class="res-row"><span class="res-key">Input</span><span class="res-val" id="u-input-echo">—</span></div>
+          <div class="res-row"><span class="res-key">Output</span><span class="res-val" id="u-output-echo">—</span></div>
+          <div class="res-row"><span class="res-key">Ratio (1 from = ? to)</span><span class="res-val" id="u-ratio">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="page" id="page-password">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">
+        <span class="tp-icon">🔐</span>
+        <div><div class="tp-title">Password Generator</div><div class="tp-sub">Strong, secure, instant</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Settings</div>
+          <div class="field"><div class="field-label">Password Length</div>
+            <div class="counter-row">
+              <button class="counter-btn" onclick="adjLen(-1)">−</button>
+              <div class="counter-val" id="p-len">16</div>
+              <button class="counter-btn" onclick="adjLen(1)">+</button>
+            </div>
+          </div>
+          <div class="option-row"><span class="option-lbl">Uppercase (A–Z)</span><label class="switch"><input type="checkbox" id="p-upper" checked onchange="genPass()"><span class="slider-sw"></span></label></div>
+          <div class="option-row"><span class="option-lbl">Numbers (0–9)</span><label class="switch"><input type="checkbox" id="p-num" checked onchange="genPass()"><span class="slider-sw"></span></label></div>
+          <div class="option-row"><span class="option-lbl">Symbols (!@#$%)</span><label class="switch"><input type="checkbox" id="p-sym" onchange="genPass()"><span class="slider-sw"></span></label></div>
+          <div class="option-row"><span class="option-lbl">Avoid ambiguous chars</span><label class="switch"><input type="checkbox" id="p-amb" onchange="genPass()"><span class="slider-sw"></span></label></div>
+          <button class="action-btn" onclick="genPass()">🎲 Generate New</button>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Generated Password</div>
+          <div class="pass-display" id="p-display">Click Generate!</div>
+          <div>
+            <div class="field-label" style="margin-bottom:6px">Strength</div>
+            <div class="strength-bar" id="p-strength" style="width:0%;background:#34D399"></div>
+            <div style="font-size:13px;color:var(--muted);margin-top:6px" id="p-strength-lbl">—</div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="action-btn" style="flex:1" onclick="genPass()">↻ Regenerate</button>
+            <button class="copy-btn" onclick="copyPass()">📋 Copy</button>
+          </div>
+          <div class="res-row"><span class="res-key">Length</span><span class="res-val" id="p-len-r">16</span></div>
+          <div class="res-row"><span class="res-key">Entropy (bits)</span><span class="res-val" id="p-entropy">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLOR -->
+    <div class="page" id="page-color">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#FBBF24,#FB923C)">
+        <span class="tp-icon">🎨</span>
+        <div><div class="tp-title">Color Picker</div><div class="tp-sub">HEX, RGB, HSL & palette explorer</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Pick a Color</div>
+          <input type="color" id="c-pick" value="#A78BFA" oninput="updateColor()" style="width:100%;height:72px;border:none;border-radius:16px;cursor:pointer;padding:4px;background:transparent">
+          <div class="field"><div class="field-label">Or Enter HEX</div>
+            <input class="nice-input" type="text" id="c-hex-in" placeholder="#A78BFA" oninput="hexInput(this.value)">
+          </div>
+          <div class="field"><div class="field-label">Swatches</div>
+            <div class="swatch-row" id="c-swatches"></div>
+          </div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Color Values</div>
+          <div class="color-preview" id="c-preview" style="background:#A78BFA"></div>
+          <div class="res-row"><span class="res-key">HEX</span><span class="res-val" id="c-hex">#A78BFA</span></div>
+          <div class="res-row"><span class="res-key">RGB</span><span class="res-val" id="c-rgb">167, 139, 250</span></div>
+          <div class="res-row"><span class="res-key">HSL</span><span class="res-val" id="c-hsl">258°, 90%, 76%</span></div>
+          <div class="res-row"><span class="res-key">CSS Variable</span><span class="res-val" style="font-family:monospace;font-size:13px" id="c-css">—</span></div>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('c-hex').textContent)">📋 Copy HEX</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOAN -->
+    <div class="page" id="page-loan">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#60A5FA,#3B82F6)">
+        <span class="tp-icon">🏦</span>
+        <div><div class="tp-title">Loan Calculator</div><div class="tp-sub">Monthly payments & full interest breakdown</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Loan Details</div>
+          <div class="field"><div class="field-label">Loan Amount ($)</div>
+            <input class="nice-input" type="number" id="l-amount" value="20000" oninput="calcLoan()">
+          </div>
+          <div class="field"><div class="field-label">Annual Interest Rate (%)</div>
+            <input class="nice-input" type="number" id="l-rate" value="5.5" step="0.1" oninput="calcLoan()">
+          </div>
+          <div class="field"><div class="field-label">Loan Term</div>
+            <div class="toggle-row">
+              <button class="toggle-btn" onclick="setTerm(1,this)">1 yr</button>
+              <button class="toggle-btn" onclick="setTerm(3,this)">3 yr</button>
+              <button class="toggle-btn sel" onclick="setTerm(5,this)">5 yr</button>
+              <button class="toggle-btn" onclick="setTerm(10,this)">10 yr</button>
+              <button class="toggle-btn" onclick="setTerm(25,this)">25 yr</button>
+            </div>
+          </div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Payment Summary</div>
+          <div class="res-card">
+            <div class="res-big accent-val" id="l-monthly">—</div>
+            <div class="res-label">monthly payment</div>
+          </div>
+          <div class="res-row"><span class="res-key">Total amount paid</span><span class="res-val" id="l-total">—</span></div>
+          <div class="res-row"><span class="res-key">Total interest paid</span><span class="res-val" id="l-interest">—</span></div>
+          <div class="res-row"><span class="res-key">Interest as % of principal</span><span class="res-val" id="l-pct">—</span></div>
+          <div class="res-row"><span class="res-key">Number of payments</span><span class="res-val" id="l-payments">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BMI -->
+    <div class="page" id="page-bmi">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#34D399,#059669)">
+        <span class="tp-icon">💪</span>
+        <div><div class="tp-title">BMI Checker</div><div class="tp-sub">Body mass index, metric or imperial</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Your Measurements</div>
+          <div class="field"><div class="field-label">Unit System</div>
+            <div class="toggle-row">
+              <button class="toggle-btn sel" onclick="setBMIUnit('metric',this)">Metric (kg / cm)</button>
+              <button class="toggle-btn" onclick="setBMIUnit('imperial',this)">Imperial (lb / in)</button>
+            </div>
+          </div>
+          <div class="field"><div class="field-label" id="bmi-w-lbl">Weight (kg)</div>
+            <input class="nice-input" type="number" id="bmi-w" value="70" oninput="calcBMI()">
+          </div>
+          <div class="field"><div class="field-label" id="bmi-h-lbl">Height (cm)</div>
+            <input class="nice-input" type="number" id="bmi-h" value="170" oninput="calcBMI()">
+          </div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Your BMI</div>
+          <div class="res-card">
+            <div class="res-big accent-val" id="bmi-val">24.2</div>
+            <div class="res-label" id="bmi-cat">Healthy weight ✅</div>
+          </div>
+          <div class="bmi-bar" style="margin:8px 0"><div class="bmi-marker" id="bmi-marker" style="left:40%"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--light);font-weight:700">
+            <span>Underweight<br>&lt;18.5</span><span style="text-align:center">Normal<br>18.5–25</span><span>Overweight<br>25–30</span><span style="text-align:right">Obese<br>&gt;30</span>
+          </div>
+          <div class="res-row"><span class="res-key">Classification</span><span class="res-val" id="bmi-class">Healthy</span></div>
+          <div class="res-row"><span class="res-key">Healthy range (your height)</span><span class="res-val" id="bmi-range">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORD COUNT -->
+    <div class="page" id="page-word">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#FB923C,#F97316)">
+        <span class="tp-icon">📝</span>
+        <div><div class="tp-title">Word Counter</div><div class="tp-sub">Full text analysis at a glance</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+
+      <!-- LANDSCAPE TEXT BOX -->
+      <div class="tool-panel" style="padding:20px 24px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div class="panel-heading" style="border:none;padding:0">Your Text</div>
+          <div style="display:flex;gap:10px">
+            <button class="secondary-btn" onclick="document.getElementById('wc-text').value='';countWords();clearScan()">Clear</button>
+            <button class="action-btn" id="wc-scan-btn" onclick="handleScanImprove()" style="width:auto;padding:11px 24px;background:linear-gradient(135deg,#FB923C,#F97316)">🔍 Scan</button>
+          </div>
+        </div>
+        <!-- Highlighted display layer -->
+        <div style="position:relative">
+          <div id="wc-highlight-layer" style="
+            position:absolute;inset:0;
+            background:var(--bg);border:1.5px solid var(--border);border-radius:13px;
+            padding:12px 16px;font-size:14px;font-family:'Nunito',sans-serif;
+            line-height:1.6;word-wrap:break-word;white-space:pre-wrap;
+            pointer-events:none;overflow:hidden;color:transparent;
+            min-height:160px;
+          "></div>
+          <textarea class="nice-textarea" id="wc-text" placeholder="Paste or type your text here..." oninput="countWords();syncHighlight()" onscroll="syncHighlightScroll()" style="min-height:160px;position:relative;background:transparent;z-index:1;"></textarea>
+        </div>
+        <!-- Scan legend -->
+        <div id="wc-scan-legend" style="display:none;margin-top:12px;gap:16px;flex-wrap:wrap;font-size:12px;font-weight:700">
+          <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;border-radius:4px;background:rgba(52,211,153,0.35);border:1.5px solid #34D399"></span>Good flow</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;border-radius:4px;background:rgba(251,191,36,0.35);border:1.5px solid #FBBF24"></span>Okay</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;border-radius:4px;background:rgba(251,146,60,0.4);border:1.5px solid #FB923C"></span>Needs improvement</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;border-radius:4px;background:rgba(248,113,113,0.4);border:1.5px solid #F87171"></span>Bad</span>
+          <span style="margin-left:auto;font-size:11px;color:var(--light);font-weight:600">💬 Hover a sentence for tips</span>
+      </div>
+
+      <!-- STATS + SCAN RESULT ROW -->
+      <div style="display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start">
+
+        <!-- STATS PANEL -->
+        <div class="result-panel">
+          <div class="panel-heading">Statistics</div>
+          <div class="stat-grid">
+            <div class="stat-box"><div class="stat-num accent-val" id="wc-words">0</div><div class="stat-lbl">Words</div></div>
+            <div class="stat-box"><div class="stat-num" id="wc-chars">0</div><div class="stat-lbl">Characters</div></div>
+            <div class="stat-box"><div class="stat-num" id="wc-chars-no">0</div><div class="stat-lbl">Chars (no spaces)</div></div>
+            <div class="stat-box"><div class="stat-num" id="wc-read">0s</div><div class="stat-lbl">Reading time</div></div>
+            <div class="stat-box"><div class="stat-num" id="wc-sent">0</div><div class="stat-lbl">Sentences</div></div>
+            <div class="stat-box"><div class="stat-num" id="wc-para">0</div><div class="stat-lbl">Paragraphs</div></div>
+          </div>
+          <div class="res-row"><span class="res-key">Avg word length</span><span class="res-val" id="wc-avg">—</span></div>
+          <div class="res-row"><span class="res-key">Unique words</span><span class="res-val" id="wc-unique">—</span></div>
+        </div>
+
+        <!-- SCAN SCORE PANEL -->
+        <div class="result-panel" id="wc-score-panel" style="min-width:220px;display:none">
+          <div class="panel-heading">Text Quality</div>
+          <div style="text-align:center;padding:12px 0 16px">
+            <div id="wc-score-ring" style="
+              width:100px;height:100px;border-radius:50%;
+              background:conic-gradient(#34D399 0deg, #E5E7EB 0deg);
+              display:flex;align-items:center;justify-content:center;
+              margin:0 auto;position:relative;
+            ">
+              <div style="width:72px;height:72px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <div id="wc-score-num" style="font-size:26px;font-weight:900;color:var(--text)">—</div>
+                <div style="font-size:10px;color:var(--muted);font-weight:700">/ 100</div>
+              </div>
+            </div>
+            <div id="wc-score-label" style="font-size:14px;font-weight:800;margin-top:10px;color:var(--muted)">Run a scan</div>
+          </div>
+          <div id="wc-score-breakdown" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+      </div>
+
+      <!-- IMPROVE PANEL -->
+      <div id="wc-improve-panel" style="display:none">
+        <div class="result-panel" style="border:2px solid #FB923C22;background:linear-gradient(135deg,#FFF7ED,#FFFFFF)">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:4px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#FB923C,#F97316);display:flex;align-items:center;justify-content:center;font-size:18px">✨</div>
+              <div>
+                <div style="font-size:16px;font-weight:800;color:var(--text)">Improvement Tips</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:1px">AI-powered suggestions for your text</div>
+              </div>
+            </div>
+            <button onclick="closeImprove()" style="background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Nunito',sans-serif">✕ Close</button>
+          </div>
+          <div id="wc-improve-content" style="padding-top:8px;min-height:80px;display:flex;align-items:center;justify-content:center">
+            <div style="text-align:center;color:var(--muted);font-size:14px">
+              <div style="font-size:28px;margin-bottom:8px">⏳</div>
+              Analysing your text...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div><!-- end #page-word -->
+
+    <!-- AGE -->
+    <div class="page" id="page-age">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#94A3B8,#64748B)">
+        <span class="tp-icon">🎂</span>
+        <div><div class="tp-title">Age Calculator</div><div class="tp-sub">Exact age in any unit</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Dates</div>
+          <div class="field"><div class="field-label">Date of Birth</div>
+            <input class="nice-input" type="date" id="age-dob" oninput="calcAge()">
+          </div>
+          <div class="field"><div class="field-label">Calculate Age As Of</div>
+            <input class="nice-input" type="date" id="age-target" oninput="calcAge()">
+          </div>
+          <button class="secondary-btn" onclick="document.getElementById('age-target').value=new Date().toISOString().slice(0,10);calcAge()">Use Today</button>
+        </div>
+        <div class="result-panel" id="age-result-panel">
+          <div class="panel-heading">Age Breakdown</div>
+          <div class="res-card">
+            <div class="res-big accent-val" id="age-years">—</div>
+            <div class="res-label">years old</div>
+          </div>
+          <div class="res-row"><span class="res-key">Total months</span><span class="res-val" id="age-months">—</span></div>
+          <div class="res-row"><span class="res-key">Total weeks</span><span class="res-val" id="age-weeks">—</span></div>
+          <div class="res-row"><span class="res-key">Total days</span><span class="res-val" id="age-days">—</span></div>
+          <div class="res-row"><span class="res-key">Total hours</span><span class="res-val" id="age-hours">—</span></div>
+          <div class="res-row"><span class="res-key">Next birthday in</span><span class="res-val accent-val" id="age-next">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISCOUNT -->
+    <div class="page" id="page-discount">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#F43F5E,#E11D48)">
+        <span class="tp-icon">🏷️</span>
+        <div><div class="tp-title">Discount Calculator</div><div class="tp-sub">Find the real sale price instantly</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Price & Discount</div>
+          <div class="field"><div class="field-label">Original Price ($)</div>
+            <input class="nice-input" type="number" id="d-price" value="100" oninput="calcDiscount()">
+          </div>
+          <div class="field"><div class="field-label">Discount Percentage (%)</div>
+            <div class="toggle-row" style="margin-bottom:8px">
+              <button class="toggle-btn" onclick="setDisc(10,this)">10%</button>
+              <button class="toggle-btn" onclick="setDisc(20,this)">20%</button>
+              <button class="toggle-btn sel" onclick="setDisc(25,this)">25%</button>
+              <button class="toggle-btn" onclick="setDisc(30,this)">30%</button>
+              <button class="toggle-btn" onclick="setDisc(50,this)">50%</button>
+            </div>
+            <input class="nice-input" type="number" id="d-pct" value="25" oninput="calcDiscount()">
+          </div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Savings</div>
+          <div class="res-card">
+            <div class="res-big accent-val" id="d-final">$75.00</div>
+            <div class="res-label">sale price</div>
+          </div>
+          <div class="res-row"><span class="res-key">Original price</span><span class="res-val" id="d-orig">$100.00</span></div>
+          <div class="res-row"><span class="res-key">You save</span><span class="res-val" style="color:#34D399" id="d-save">$25.00</span></div>
+          <div class="res-row"><span class="res-key">Discount amount</span><span class="res-val" id="d-amt">$25.00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BASE64 -->
+    <div class="page" id="page-base64">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#38BDF8,#0EA5E9)">
+        <span class="tp-icon">🔤</span>
+        <div><div class="tp-title">Base64 Coder</div><div class="tp-sub">Encode and decode text instantly</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Settings & Input</div>
+          <div class="field"><div class="field-label">Mode</div>
+            <div class="toggle-row">
+              <button class="toggle-btn sel" onclick="setB64('encode',this)">Encode →</button>
+              <button class="toggle-btn" onclick="setB64('decode',this)">← Decode</button>
+            </div>
+          </div>
+          <div class="field"><div class="field-label" id="b64-in-lbl">Input Text</div>
+            <textarea class="nice-textarea" id="b64-in" placeholder="Enter text to encode..." oninput="doB64()" style="min-height:180px"></textarea>
+          </div>
+          <button class="action-btn" onclick="doB64()">Convert ✦</button>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading" id="b64-out-lbl">Base64 Output</div>
+          <div class="mono-display" id="b64-out">—</div>
+          <div style="display:flex;gap:10px">
+            <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('b64-out').textContent)">📋 Copy output</button>
+            <button class="secondary-btn" onclick="swapB64()">⇄ Swap input/output</button>
+          </div>
+          <div class="res-row"><span class="res-key">Input length</span><span class="res-val" id="b64-inlen">0 chars</span></div>
+          <div class="res-row"><span class="res-key">Output length</span><span class="res-val" id="b64-outlen">0 chars</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HASH GENERATOR -->
+    <div class="page" id="page-hash">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#7C3AED,#4F46E5)">
+        <span class="tp-icon">🔒</span>
+        <div><div class="tp-title">Hash Generator</div><div class="tp-sub">MD5, SHA-1, SHA-256 & SHA-512</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Input</div>
+          <div class="field"><div class="field-label">Text to Hash</div>
+            <textarea class="nice-textarea" id="hash-in" placeholder="Enter any text to generate hashes..." oninput="doHash()" style="min-height:200px"></textarea>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6">🔒 All hashing runs <strong>locally in your browser</strong> — no data is sent anywhere.</div>
+          <div class="res-row"><span class="res-key">Input length</span><span class="res-val" id="hash-inlen">0 chars</span></div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Hash Results</div>
+          <div class="field"><div class="field-label">MD5</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="mono-display" id="md5-out" style="flex:1;font-size:12px;word-break:break-all;min-height:auto;padding:10px 14px">—</div>
+              <button class="copy-btn" onclick="copyHash('md5-out')" style="flex-shrink:0">📋</button>
+            </div>
+          </div>
+          <div class="field"><div class="field-label">SHA-1</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="mono-display" id="sha1-out" style="flex:1;font-size:12px;word-break:break-all;min-height:auto;padding:10px 14px">—</div>
+              <button class="copy-btn" onclick="copyHash('sha1-out')" style="flex-shrink:0">📋</button>
+            </div>
+          </div>
+          <div class="field"><div class="field-label">SHA-256</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="mono-display" id="sha256-out" style="flex:1;font-size:12px;word-break:break-all;min-height:auto;padding:10px 14px">—</div>
+              <button class="copy-btn" onclick="copyHash('sha256-out')" style="flex-shrink:0">📋</button>
+            </div>
+          </div>
+          <div class="field"><div class="field-label">SHA-512</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="mono-display" id="sha512-out" style="flex:1;font-size:11px;word-break:break-all;min-height:auto;padding:10px 14px">—</div>
+              <button class="copy-btn" onclick="copyHash('sha512-out')" style="flex-shrink:0">📋</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURRENCY CONVERTER -->
+    <div class="page" id="page-currency">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#34D399,#10B981)">
+        <span class="tp-icon">💱</span>
+        <div><div class="tp-title">Currency Converter</div><div class="tp-sub">30+ world currencies — indicative rates</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Conversion</div>
+          <div class="field"><div class="field-label">Amount</div>
+            <input class="nice-input" type="number" id="fx-amt" value="100" oninput="calcFX()">
+          </div>
+          <div class="field"><div class="field-label">From</div>
+            <select class="nice-select" id="fx-from" onchange="calcFX()"></select>
+          </div>
+          <div style="display:flex;justify-content:center;margin:4px 0">
+            <button class="swap-btn" onclick="swapFX()">⇄ Swap</button>
+          </div>
+          <div class="field"><div class="field-label">To</div>
+            <select class="nice-select" id="fx-to" onchange="calcFX()"></select>
+          </div>
+          <div id="fx-status" style="font-size:11px;color:var(--light);font-weight:600;text-align:center;margin-top:4px">⏳ Loading rates…</div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Result</div>
+          <div class="res-card">
+            <div class="res-big accent-val" id="fx-result">—</div>
+            <div class="res-label" id="fx-result-currency">—</div>
+          </div>
+          <div class="res-row"><span class="res-key">Exchange rate</span><span class="res-val" id="fx-rate">—</span></div>
+          <div class="res-row"><span class="res-key">Inverse rate</span><span class="res-val" id="fx-rate-inv">—</span></div>
+          <div class="res-row"><span class="res-key">You convert</span><span class="res-val" id="fx-input-echo">—</span></div>
+          <div class="res-row"><span class="res-key">You get</span><span class="res-val" id="fx-output-echo">—</span></div>
+          <div class="panel-heading" style="margin-top:8px">Common rates from selected currency</div>
+          <div id="fx-table"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIME ZONE CONVERTER -->
+    <div class="page" id="page-timezone">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#60A5FA,#3B82F6)">
+        <span class="tp-icon">🌍</span>
+        <div><div class="tp-title">Time Zone Converter</div><div class="tp-sub">Live clocks & time conversion</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Select Zones</div>
+          <div class="field"><div class="field-label">From City</div>
+            <select class="nice-select" id="tz-from" onchange="updateTZ()"></select>
+          </div>
+          <div style="display:flex;justify-content:center;margin:4px 0">
+            <button class="swap-btn" onclick="swapTZ()">⇄ Swap</button>
+          </div>
+          <div class="field"><div class="field-label">To City</div>
+            <select class="nice-select" id="tz-to" onchange="updateTZ()"></select>
+          </div>
+          <div class="field" style="margin-top:8px"><div class="field-label">Convert a Specific Time</div>
+            <input class="nice-input" type="time" id="tz-custom-time" oninput="calcTZCustom()">
+          </div>
+          <div class="res-row"><span class="res-key">Converted time</span><span class="res-val accent-val" id="tz-custom-result">—</span></div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Live Clocks</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="res-card" style="text-align:center">
+              <div style="font-size:11px;font-weight:800;color:var(--light);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px" id="tz-from-label">City A</div>
+              <div style="font-size:26px;font-weight:900;color:var(--text);letter-spacing:-1px;font-family:monospace" id="tz-from-time">--:--:--</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px" id="tz-from-date">—</div>
+              <div style="font-size:11px;color:var(--light);margin-top:2px;font-weight:700" id="tz-from-offset">—</div>
+            </div>
+            <div class="res-card" style="text-align:center">
+              <div style="font-size:11px;font-weight:800;color:var(--light);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px" id="tz-to-label">City B</div>
+              <div style="font-size:26px;font-weight:900;color:var(--text);letter-spacing:-1px;font-family:monospace" id="tz-to-time">--:--:--</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px" id="tz-to-date">—</div>
+              <div style="font-size:11px;color:var(--light);margin-top:2px;font-weight:700" id="tz-to-offset">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRADIENT GENERATOR -->
+    <div class="page" id="page-gradient">
+      <div class="tool-page-hero" style="background:linear-gradient(135deg,#F472B6,#A78BFA,#60A5FA)">
+        <span class="tp-icon">🌈</span>
+        <div><div class="tp-title">Gradient Generator</div><div class="tp-sub">Beautiful CSS gradients, instantly</div></div>
+        <button class="back-btn" onclick="showHome()">← Back</button>
+      </div>
+      <div class="tool-workspace">
+        <div class="tool-panel">
+          <div class="panel-heading">Settings</div>
+          <div class="field"><div class="field-label">Type</div>
+            <div class="toggle-row">
+              <button class="toggle-btn sel" onclick="setGradType('linear',this)">Linear</button>
+              <button class="toggle-btn" onclick="setGradType('radial',this)">Radial</button>
+              <button class="toggle-btn" onclick="setGradType('conic',this)">Conic</button>
+            </div>
+          </div>
+          <div class="field" id="grad-angle-wrap"><div class="field-label">Angle: <span id="grad-angle-val">135°</span></div>
+            <input type="range" min="0" max="360" value="135" oninput="setGradAngle(this.value)" style="width:100%;accent-color:var(--purple);margin-top:4px">
+          </div>
+          <div class="field"><div class="field-label">Color Stops</div>
+            <div id="grad-stops"></div>
+            <button class="secondary-btn" onclick="addGradStop()" style="margin-top:8px">+ Add Stop</button>
+          </div>
+          <div class="field"><div class="field-label">Presets</div>
+            <div id="grad-presets" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px"></div>
+          </div>
+        </div>
+        <div class="result-panel">
+          <div class="panel-heading">Preview</div>
+          <div id="grad-preview" style="width:100%;height:220px;border-radius:20px;background:linear-gradient(135deg,#A78BFA,#F9A8D4);flex-shrink:0"></div>
+          <div class="field"><div class="field-label">CSS Code</div>
+            <div class="mono-display" id="grad-css-out" style="font-size:13px;word-break:break-all;min-height:auto;padding:14px 16px">background: linear-gradient(135deg, #A78BFA, #F9A8D4);</div>
+          </div>
+          <button class="action-btn" onclick="copyGradCSS()">📋 Copy CSS</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ── NAV ── */
+let _activePage = 'home';
+
+function showHome(navEl) {
+  showPage('home');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  (navEl || document.querySelector('.nav-btn')).classList.add('active');
+}
+
+function openTool(id, navEl) {
+  showPage(id);
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  else { document.querySelectorAll('.nav-btn').forEach(b => { if (b.textContent.toLowerCase().includes(id)) b.classList.add('active'); }); }
+  initToolLogic(id);
+}
+
+function showPage(id) {
+  if (typeof _tzInterval !== 'undefined' && _tzInterval && id !== 'timezone') { clearInterval(_tzInterval); _tzInterval = null; }
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('main').scrollTop = 0;
+  _activePage = id;
+}
+
+function filterTools(q) {
+  const cards = document.querySelectorAll('#all-tools-grid .tool-card');
+  cards.forEach(c => {
+    c.style.display = c.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+/* ── INIT ── */
+function initToolLogic(id) {
+  if (id === 'tip') calcTip();
+  if (id === 'unit') { loadUnitPairs(); doConvert(); }
+  if (id === 'password') genPass();
+  if (id === 'color') { updateColor(); buildSwatches(); }
+  if (id === 'loan') calcLoan();
+  if (id === 'bmi') calcBMI();
+  if (id === 'discount') calcDiscount();
+  if (id === 'age') {
+    const t = new Date(); const dob = new Date(t.getFullYear()-28, t.getMonth(), t.getDate());
+    document.getElementById('age-dob').value = dob.toISOString().slice(0,10);
+    document.getElementById('age-target').value = t.toISOString().slice(0,10);
+    calcAge();
+  }
+  if (id === 'hash') { document.getElementById('hash-in').value = ''; document.getElementById('hash-inlen').textContent = '0 chars'; }
+  if (id === 'currency') buildFXSelects();
+  if (id === 'timezone') buildTZSelects();
+  if (id === 'gradient') { renderGradStops(); buildGradPresets(); updateGradientCSS(); }
+}
+
+/* ── TIP ── */
+let _tipPct = 15, _people = 2;
+function setTip(v, el) { _tipPct = v; document.querySelectorAll('#page-tip .toggle-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); calcTip(); }
+function adjPeople(d) { _people = Math.max(1, _people+d); document.getElementById('t-pcount').textContent = _people; calcTip(); }
+function calcTip() {
+  const bill = parseFloat(document.getElementById('t-bill').value)||0;
+  const tip = bill * _tipPct / 100;
+  const total = bill + tip;
+  const pp = total / _people;
+  document.getElementById('r-tip').textContent = '$'+tip.toFixed(2);
+  document.getElementById('r-total').textContent = '$'+total.toFixed(2);
+  document.getElementById('r-pp').textContent = '$'+pp.toFixed(2);
+  document.getElementById('r-pp2').textContent = '$'+pp.toFixed(2);
+  document.getElementById('r-tipp').textContent = '$'+(tip/_people).toFixed(2);
+}
+
+/* ── UNIT ── */
+const unitData = {
+  length: { units:['Metre','Kilometre','Mile','Foot','Inch','Centimetre','Yard','Nautical mile'], base:[1,1000,1609.34,0.3048,0.0254,0.01,0.9144,1852] },
+  weight: { units:['Kilogram','Gram','Pound','Ounce','Tonne','Stone'], base:[1,0.001,0.453592,0.0283495,1000,6.35029] },
+  temp:   { units:['Celsius','Fahrenheit','Kelvin'], base:null },
+  speed:  { units:['m/s','km/h','mph','knots','ft/s'], base:[1,0.277778,0.44704,0.514444,0.3048] },
+  volume: { units:['Litre','Millilitre','Gallon (US)','Gallon (UK)','Cup','Fluid oz','Cubic metre','Tablespoon'], base:[1,0.001,3.78541,4.54609,0.236588,0.0295735,1000,0.0147868] }
+};
+function loadUnitPairs() {
+  const cat = document.getElementById('u-cat').value;
+  const d = unitData[cat];
+  ['u-from','u-to'].forEach((id,i) => {
+    const sel = document.getElementById(id); sel.innerHTML = '';
+    d.units.forEach((u,idx) => { const o=document.createElement('option'); o.value=idx; o.textContent=u; sel.appendChild(o); });
+    if(i===1 && d.units.length>1) sel.selectedIndex=1;
+  });
+  doConvert();
+}
+function swapUnits() {
+  const f=document.getElementById('u-from'), t=document.getElementById('u-to');
+  const tmp=f.selectedIndex; f.selectedIndex=t.selectedIndex; t.selectedIndex=tmp; doConvert();
+}
+function doConvert() {
+  const cat=document.getElementById('u-cat').value;
+  const val=parseFloat(document.getElementById('u-val').value)||0;
+  const fi=parseInt(document.getElementById('u-from').value);
+  const ti=parseInt(document.getElementById('u-to').value);
+  const d=unitData[cat]; let result, ratio;
+  if(cat==='temp') {
+    if(fi===0&&ti===1) result=val*9/5+32;
+    else if(fi===1&&ti===0) result=(val-32)*5/9;
+    else if(fi===0&&ti===2) result=val+273.15;
+    else if(fi===2&&ti===0) result=val-273.15;
+    else if(fi===1&&ti===2) result=(val-32)*5/9+273.15;
+    else if(fi===2&&ti===1) result=(val-273.15)*9/5+32;
+    else result=val;
+    ratio = '—';
+  } else {
+    ratio = (d.base[fi]/d.base[ti]);
+    result = val * d.base[fi] / d.base[ti];
+  }
+  const fromName=d.units[fi], toName=d.units[ti];
+  const fmt = n => +parseFloat(n).toPrecision(7);
+  document.getElementById('u-result').textContent = fmt(result)+' '+toName;
+  document.getElementById('u-result-lbl').textContent = val+' '+fromName+' = '+fmt(result)+' '+toName;
+  document.getElementById('u-input-echo').textContent = val+' '+fromName;
+  document.getElementById('u-output-echo').textContent = fmt(result)+' '+toName;
+  document.getElementById('u-ratio').textContent = ratio === '—' ? '—' : +parseFloat(ratio).toPrecision(6);
+}
+
+/* ── PASSWORD ── */
+let _passLen = 16;
+function adjLen(d) { _passLen=Math.max(6,Math.min(128,_passLen+d)); document.getElementById('p-len').textContent=_passLen; genPass(); }
+function genPass() {
+  let chars='abcdefghijklmnopqrstuvwxyz';
+  const amb='0Oo1lI';
+  if(document.getElementById('p-upper').checked) chars+='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if(document.getElementById('p-num').checked) chars+='0123456789';
+  if(document.getElementById('p-sym').checked) chars+='!@#$%^&*()_+-=[]{}|;:,.<>?';
+  if(document.getElementById('p-amb').checked) chars=chars.split('').filter(c=>!amb.includes(c)).join('');
+  let pass='';
+  for(let i=0;i<_passLen;i++) pass+=chars[Math.floor(Math.random()*chars.length)];
+  document.getElementById('p-display').textContent=pass;
+  document.getElementById('p-len-r').textContent=_passLen;
+  const score=Math.min(100,_passLen*3+(document.getElementById('p-upper').checked?15:0)+(document.getElementById('p-num').checked?15:0)+(document.getElementById('p-sym').checked?20:0));
+  const bar=document.getElementById('p-strength');
+  bar.style.width=score+'%'; bar.style.height='8px'; bar.style.borderRadius='8px';
+  bar.style.background=score<40?'#F87171':score<70?'#FBBF24':'#34D399';
+  const lbl=score<40?'Weak':'Weak' && score<70?'Fair':'Strong';
+  document.getElementById('p-strength-lbl').textContent=score<40?'Weak ⚠️':score<70?'Fair 🟡':'Strong ✅';
+  const charset = chars.length;
+  const entropy = Math.round(_passLen * Math.log2(charset));
+  document.getElementById('p-entropy').textContent=entropy+' bits';
+}
+function copyPass() { navigator.clipboard.writeText(document.getElementById('p-display').textContent); }
+
+/* ── COLOR ── */
+function hexToRgb(hex) { const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return [r,g,b]; }
+function rgbToHsl(r,g,b) {
+  r/=255;g/=255;b/=255;
+  const max=Math.max(r,g,b),min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if(max===min){h=s=0;}else{
+    const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}
+  }
+  return [Math.round(h*360),Math.round(s*100),Math.round(l*100)];
+}
+function updateColor() {
+  const hex=document.getElementById('c-pick').value;
+  document.getElementById('c-preview').style.background=hex;
+  document.getElementById('c-hex').textContent=hex.toUpperCase();
+  document.getElementById('c-hex-in').value=hex.toUpperCase();
+  const [r,g,b]=hexToRgb(hex);
+  document.getElementById('c-rgb').textContent=r+', '+g+', '+b;
+  const [h,s,l]=rgbToHsl(r,g,b);
+  document.getElementById('c-hsl').textContent=h+'°, '+s+'%, '+l+'%';
+  document.getElementById('c-css').textContent='color: '+hex.toUpperCase()+';';
+}
+function hexInput(v) {
+  if(/^#[0-9A-Fa-f]{6}$/.test(v)) { document.getElementById('c-pick').value=v; updateColor(); }
+}
+function buildSwatches() {
+  const colors=['#F472B6','#FB923C','#FBBF24','#34D399','#2DD4BF','#60A5FA','#A78BFA','#F43F5E','#38BDF8','#94A3B8','#1E1B4B','#FFFFFF'];
+  const row=document.getElementById('c-swatches'); if(!row) return; row.innerHTML='';
+  colors.forEach(c=>{ const d=document.createElement('div'); d.className='swatch'; d.style.background=c; d.style.border=c==='#FFFFFF'?'2px solid #E5E7EB':''; d.onclick=()=>{ document.getElementById('c-pick').value=c; updateColor(); }; row.appendChild(d); });
+}
+
+/* ── LOAN ── */
+let _loanTerm = 5;
+function setTerm(v, el) { _loanTerm=v; document.querySelectorAll('#page-loan .toggle-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); calcLoan(); }
+function calcLoan() {
+  const P=parseFloat(document.getElementById('l-amount').value)||0;
+  const r=(parseFloat(document.getElementById('l-rate').value)||0)/100/12;
+  const n=_loanTerm*12;
+  let monthly; if(r===0){monthly=P/n;}else{monthly=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);}
+  const total=monthly*n; const interest=total-P;
+  document.getElementById('l-monthly').textContent='$'+monthly.toFixed(2);
+  document.getElementById('l-total').textContent='$'+total.toFixed(2);
+  document.getElementById('l-interest').textContent='$'+interest.toFixed(2);
+  document.getElementById('l-pct').textContent=P>0?(interest/P*100).toFixed(1)+'%':'—';
+  document.getElementById('l-payments').textContent=n;
+}
+
+/* ── BMI ── */
+let _bmiUnit = 'metric';
+function setBMIUnit(u, el) {
+  _bmiUnit=u; document.querySelectorAll('#page-bmi .toggle-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel');
+  document.getElementById('bmi-w-lbl').textContent=u==='metric'?'Weight (kg)':'Weight (lbs)';
+  document.getElementById('bmi-h-lbl').textContent=u==='metric'?'Height (cm)':'Height (inches)';
+  document.getElementById('bmi-w').value=u==='metric'?70:154;
+  document.getElementById('bmi-h').value=u==='metric'?170:67;
+  calcBMI();
+}
+function calcBMI() {
+  let w=parseFloat(document.getElementById('bmi-w').value)||0;
+  let h=parseFloat(document.getElementById('bmi-h').value)||0;
+  if(_bmiUnit==='imperial'){w=w*0.453592;h=h*2.54;}
+  const bmi=w/(h/100)**2; const b=isNaN(bmi)||!isFinite(bmi)?0:bmi;
+  document.getElementById('bmi-val').textContent=b.toFixed(1);
+  let cat,cls,pct;
+  if(b<18.5){cat='Underweight ⚠️';cls='Underweight';pct=10;}
+  else if(b<25){cat='Healthy weight ✅';cls='Healthy';pct=38;}
+  else if(b<30){cat='Overweight ⚠️';cls='Overweight';pct=65;}
+  else{cat='Obese 🔴';cls='Obese';pct=88;}
+  document.getElementById('bmi-cat').textContent=cat;
+  document.getElementById('bmi-class').textContent=cls;
+  document.getElementById('bmi-marker').style.left=pct+'%';
+  const hm=_bmiUnit==='metric'?parseFloat(document.getElementById('bmi-h').value)/100:parseFloat(document.getElementById('bmi-h').value)*0.0254;
+  const minKg=(18.5*hm*hm), maxKg=(24.9*hm*hm);
+  if(_bmiUnit==='metric'){document.getElementById('bmi-range').textContent=minKg.toFixed(1)+'–'+maxKg.toFixed(1)+' kg';}
+  else{document.getElementById('bmi-range').textContent=(minKg*2.20462).toFixed(1)+'–'+(maxKg*2.20462).toFixed(1)+' lbs';}
+}
+
+/* ── WORD COUNT ── */
+function countWords() {
+  const t=document.getElementById('wc-text').value;
+  const words=t.trim()===''?0:t.trim().split(/\s+/).length;
+  const chars=t.length; const charsNo=t.replace(/\s/g,'').length;
+  const secs=Math.max(0,Math.round(words/3));
+  const readStr=secs===0?'0s':secs<60?secs+'s':Math.floor(secs/60)+'m '+secs%60+'s';
+  const sents=(t.match(/[.!?]+/g)||[]).length;
+  const paras=t.trim()===''?0:t.split(/\n\s*\n/).filter(p=>p.trim()).length||1;
+  const wordList=t.trim()===''?[]:t.trim().toLowerCase().split(/\s+/);
+  const unique=new Set(wordList).size;
+  const avgLen=wordList.length>0?(wordList.join('').length/wordList.length).toFixed(1):0;
+  document.getElementById('wc-words').textContent=words;
+  document.getElementById('wc-chars').textContent=chars;
+  document.getElementById('wc-chars-no').textContent=charsNo;
+  document.getElementById('wc-read').textContent=readStr;
+  document.getElementById('wc-sent').textContent=sents;
+  document.getElementById('wc-para').textContent=paras;
+  document.getElementById('wc-avg').textContent=avgLen+' chars';
+  document.getElementById('wc-unique').textContent=unique;
+}
+
+let _wcHasScanned = false;
+
+function handleScanImprove() {
+  const btn = document.getElementById('wc-scan-btn');
+  if (!_wcHasScanned) {
+    scanText();
+    _wcHasScanned = true;
+    btn.textContent = '✨ Improve';
+    btn.style.background = 'linear-gradient(135deg,#7C3AED,#C026D3)';
+  } else {
+    getImprovements();
+  }
+}
+
+function closeImprove() {
+  document.getElementById('wc-improve-panel').style.display = 'none';
+}
+
+function getImprovements() {
+  const text = document.getElementById('wc-text').value.trim();
+  if (!text) return;
+
+  const panel = document.getElementById('wc-improve-panel');
+  const content = document.getElementById('wc-improve-content');
+  panel.style.display = 'block';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  const FILLER = new Set(['very','really','just','quite','basically','actually','literally','honestly','simply','totally','maybe','rather','fairly','somewhat','stuff','thing','things','lot','lots','nice']);
+  const STOPWORDS = new Set(['the','and','for','are','but','not','you','all','can','had','her','was','one','our','out','did','get','has','him','his','how','its','now','old','see','two','who','let','put','say','she','too','use','way','will','with','that','this','have','from','they','been','said','each','what','were','then','into','there','when','more','than','some','also','any','about','over','such','even','most','other','these','those','would','could','should','because','which','their','after','while','being','through','where','before','between','same','both','here','just','like','well','know','make','only','time','come','take','want','look','back','give','went','came','made','does','doing','much','many','used','need','long','down','work','still','never','every','right','always','since','though','until','upon','very','once','across','around','another','without']);
+  const TRANSITIONS = new Set(['however','therefore','furthermore','moreover','additionally','consequently','meanwhile','nevertheless','nonetheless','thus','hence','accordingly','similarly','likewise','as a result','in addition','for example','for instance','in conclusion','in summary']);
+
+  const sentences = text.match(/[^.!?]+[.!?]*/g) || [text];
+  const allWords = text.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
+  const globalFreq = {};
+  allWords.forEach(w => { globalFreq[w] = (globalFreq[w]||0)+1; });
+
+  const tips = [];
+
+  // 1. REPETITION — find the most overused content words
+  const contentFreq = {};
+  allWords.filter(w => !STOPWORDS.has(w)).forEach(w => { contentFreq[w] = (contentFreq[w]||0)+1; });
+  const overused = Object.entries(contentFreq).filter(([w,c]) => c >= 3).sort((a,b) => b[1]-a[1]);
+  if (overused.length > 0) {
+    const words = overused.slice(0,4).map(([w,c]) => `"${w}" (×${c})`).join(', ');
+    tips.push({
+      category: 'Repetition', icon: '🔁', severity: overused[0][1] >= 5 ? 'high' : 'medium',
+      tip: `You're overusing certain words throughout your text: ${words}.`,
+      example: `Try swapping repeated words with synonyms or restructuring sentences to avoid the echo effect.`
+    });
+  }
+
+  // 2. FILLER WORDS
+  const fillerFound = allWords.filter(w => FILLER.has(w));
+  const uniqueFiller = [...new Set(fillerFound)];
+  if (fillerFound.length >= 2) {
+    tips.push({
+      category: 'Word Choice', icon: '📝', severity: fillerFound.length >= 5 ? 'high' : 'medium',
+      tip: `Your text contains ${fillerFound.length} weak filler word${fillerFound.length>1?'s':''}: ${uniqueFiller.slice(0,5).map(w=>`"${w}"`).join(', ')}.`,
+      example: `Instead of "It was really very nice", try "It was exceptional" — precise words hit harder.`
+    });
+  }
+
+  // 3. SENTENCE LENGTH VARIETY
+  const lengths = sentences.map(s => (s.match(/\b\w+\b/g)||[]).length);
+  const avgLen = lengths.reduce((a,b)=>a+b,0) / lengths.length;
+  const shortCount = lengths.filter(l => l < 5).length;
+  const longCount = lengths.filter(l => l > 30).length;
+  const allSimilar = lengths.length > 2 && Math.max(...lengths) - Math.min(...lengths) < 6;
+
+  if (longCount > 0) {
+    tips.push({
+      category: 'Sentence Structure', icon: '📐', severity: 'high',
+      tip: `${longCount} sentence${longCount>1?'s are':' is'} very long (30+ words). Long sentences are hard to follow.`,
+      example: `Split at natural breaks — a conjunction like "and", "but", or "because" often marks a good split point.`
+    });
+  }
+  if (shortCount > 1) {
+    tips.push({
+      category: 'Sentence Structure', icon: '📐', severity: shortCount > 3 ? 'high' : 'medium',
+      tip: `${shortCount} very short sentences (under 5 words) create a choppy, fragmented rhythm.`,
+      example: `Try merging related short sentences: "It sat. The cat sat." → "The cat sat perfectly still."`
+    });
+  }
+  if (allSimilar && lengths.length > 2) {
+    tips.push({
+      category: 'Flow', icon: '🔀', severity: 'medium',
+      tip: `All your sentences are a similar length (~${Math.round(avgLen)} words). This creates a monotonous rhythm.`,
+      example: `Mix it up — follow a long, complex sentence with a short punchy one for impact.`
+    });
+  }
+
+  // 4. TRANSITIONS / FLOW
+  const transitionCount = sentences.filter(s => {
+    const w = s.toLowerCase().match(/\b[a-z]+\b/g) || [];
+    return w.some(wd => TRANSITIONS.has(wd));
+  }).length;
+  if (sentences.length > 3 && transitionCount < Math.floor(sentences.length / 4)) {
+    tips.push({
+      category: 'Flow', icon: '🔀', severity: 'medium',
+      tip: `Your text has few or no transition words, making it feel like disconnected ideas.`,
+      example: `Add signposts like "However,", "As a result,", "Furthermore," or "In contrast," to guide the reader.`
+    });
+  }
+
+  // 5. UNIQUE WORD RATIO (vocabulary richness)
+  const uniqueRatio = new Set(allWords).size / allWords.length;
+  if (allWords.length > 20 && uniqueRatio < 0.55) {
+    tips.push({
+      category: 'Conciseness', icon: '✂️', severity: 'medium',
+      tip: `Your vocabulary diversity is low — only ${Math.round(uniqueRatio*100)}% of words are unique. This signals repetition or padding.`,
+      example: `Read each sentence and ask: does this add something new, or am I restating what I already said?`
+    });
+  }
+
+  // 6. PARAGRAPH STRUCTURE
+  const paras = text.split(/\n\s*\n/).filter(p => p.trim());
+  if (paras.length === 1 && sentences.length > 6) {
+    tips.push({
+      category: 'Clarity', icon: '💡', severity: 'low',
+      tip: `All your text is in one block. Breaking it into paragraphs makes it much easier to read.`,
+      example: `Group related sentences together and add a blank line between each idea or topic.`
+    });
+  }
+
+  // If nothing flagged, give a positive summary
+  if (tips.length === 0) {
+    tips.push({
+      category: 'Clarity', icon: '✅', severity: 'low',
+      tip: 'Your text looks solid! No major issues detected.',
+      example: 'Keep an eye on sentence variety and transition words as your text grows longer.'
+    });
+  }
+
+  // Sort: high → medium → low
+  const sevOrder = { high: 0, medium: 1, low: 2 };
+  tips.sort((a,b) => sevOrder[a.severity] - sevOrder[b.severity]);
+
+  const sevColor = { high: '#F87171', medium: '#FBBF24', low: '#34D399' };
+  const sevLabel = { high: '🔴 High priority', medium: '🟡 Medium', low: '🟢 Minor' };
+
+  content.innerHTML = tips.map(t => `
+    <div style="padding:14px 0;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:flex-start">
+      <div style="width:38px;height:38px;border-radius:12px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${t.icon}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap">
+          <span style="font-size:12px;font-weight:800;color:var(--text)">${t.category}</span>
+          <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:${sevColor[t.severity]}22;color:${sevColor[t.severity]}">${sevLabel[t.severity]}</span>
+        </div>
+        <div style="font-size:13px;color:var(--text);font-weight:600;line-height:1.5">${t.tip}</div>
+        ${t.example ? `<div style="font-size:12px;color:var(--muted);margin-top:6px;background:var(--bg);border-radius:8px;padding:8px 10px;border-left:3px solid #FB923C;line-height:1.5">${t.example}</div>` : ''}
+      </div>
+    </div>
+  `).join('') + `<div style="padding-top:12px;font-size:11px;color:var(--light);text-align:center;font-weight:600">Fix high priority issues first, then hit Scan again ✦</div>`;
+}
+
+function clearScan() {
+  _wcHasScanned = false;
+  const btn = document.getElementById('wc-scan-btn');
+  btn.textContent = '🔍 Scan';
+  btn.style.background = 'linear-gradient(135deg,#FB923C,#F97316)';
+  document.getElementById('wc-highlight-layer').innerHTML='';
+  document.getElementById('wc-score-panel').style.display='none';
+  document.getElementById('wc-scan-legend').style.display='none';
+  document.getElementById('wc-improve-panel').style.display='none';
+  hideTooltip();
+}
+
+function syncHighlight() {
+  _wcHasScanned = false;
+  const btn = document.getElementById('wc-scan-btn');
+  btn.textContent = '🔍 Scan';
+  btn.style.background = 'linear-gradient(135deg,#FB923C,#F97316)';
+  document.getElementById('wc-highlight-layer').innerHTML='';
+  document.getElementById('wc-text').style.background='';
+  document.getElementById('wc-improve-panel').style.display='none';
+  hideTooltip();
+}
+function syncHighlightScroll() {
+  const ta=document.getElementById('wc-text');
+  const hl=document.getElementById('wc-highlight-layer');
+  hl.scrollTop=ta.scrollTop;
+}
+
+/* ── TOOLTIP ── */
+function hideTooltip() {
+  const t = document.getElementById('wc-tooltip');
+  if (t) t.style.display='none';
+}
+
+function showTooltip(el, tips, score, borderColor) {
+  let t = document.getElementById('wc-tooltip');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'wc-tooltip';
+    document.body.appendChild(t);
+  }
+  const grade = score >= 80 ? 'Good' : score >= 60 ? 'Okay' : score >= 40 ? 'Needs improvement' : 'Bad';
+  t.innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+      <div style="width:10px;height:10px;border-radius:3px;background:${borderColor};flex-shrink:0"></div>
+      <strong style="font-size:13px;color:#1E1B4B">${grade} · Score ${score}/100</strong>
+    </div>
+    ${tips.map(tip=>`<div style="font-size:12px;color:#6B7280;margin-top:4px;display:flex;gap:6px"><span style="color:${borderColor}">▸</span><span>${tip}</span></div>`).join('')}
+  `;
+  t.style.cssText = `
+    position:fixed;z-index:9999;
+    background:#fff;border:1.5px solid ${borderColor};
+    border-radius:14px;padding:12px 16px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.15);
+    max-width:280px;font-family:'Nunito',sans-serif;
+    pointer-events:none;display:block;
+  `;
+  const rect = el.getBoundingClientRect();
+  const top = rect.bottom + 8;
+  const left = Math.min(rect.left, window.innerWidth - 300);
+  t.style.top = top + 'px';
+  t.style.left = Math.max(8, left) + 'px';
+}
+
+function scanText() {
+  const raw = document.getElementById('wc-text').value;
+  if (!raw.trim()) return;
+
+  const btn = document.getElementById('wc-scan-btn');
+  btn.textContent = '⏳ Scanning...';
+  btn.disabled = true;
+  hideTooltip();
+
+  // Filler = genuinely weak/vague words only (not normal English words like "good", "the", "was")
+  const FILLER = new Set(['very','really','just','quite','basically','actually','literally','honestly','simply','totally','maybe','rather','fairly','somewhat','stuff','thing','things','lot','lots','nice']);
+  const TRANSITIONS = new Set(['however','therefore','furthermore','moreover','additionally','consequently','meanwhile','nevertheless','nonetheless','thus','hence','accordingly','similarly','likewise','as a result','in addition','for example','for instance','in conclusion','in summary']);
+  // Common English stop-words that are fine to repeat — exclude from repetition scoring
+  const STOPWORDS = new Set(['the','and','for','are','but','not','you','all','can','had','her','was','one','our','out','did','get','has','him','his','how','its','now','old','see','two','who','did','let','put','say','she','too','use','way','will','with','that','this','have','from','they','been','said','each','what','were','then','into','there','when','more','than','some','also','any','about','over','such','even','most','other','these','those','would','could','should','because','which','their','after','while','being','through','where','before','between','same','both','here','just','like','well','know','make','only','time','come','take','want','look','back','give','went','came','made','does','doing','much','many','used','need','long','down','went','work','still','never','every','right','always','since','though','until','upon','very','once','across','around','another','without']);
+
+  const allWords = raw.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
+  const globalFreq = {};
+  allWords.forEach(w => { globalFreq[w] = (globalFreq[w]||0)+1; });
+  const totalWords = allWords.length;
+
+  // Split sentences
+  const sentences = raw.match(/[^.!?]+[.!?]*/g) || [raw];
+
+  const scored = sentences.map((sent) => {
+    const wds = sent.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
+    const sentLen = wds.length;
+    const issues = [];
+    let penalties = 0;
+
+    // 1. LENGTH — sweet spot is 8–30 words
+    if (sentLen === 0) {
+      penalties += 80;
+      issues.push('Empty or punctuation-only fragment.');
+    } else if (sentLen < 3) {
+      penalties += 60;
+      issues.push('Very short fragment — consider expanding or merging.');
+    } else if (sentLen < 6) {
+      penalties += 30;
+      issues.push('Short sentence — consider expanding for more depth.');
+    } else if (sentLen > 40) {
+      penalties += 40;
+      issues.push('Very long sentence — try splitting it for clarity.');
+    } else if (sentLen > 28) {
+      penalties += 22;
+      issues.push('Long sentence — consider breaking it up.');
+    }
+
+    // 2. GLOBAL REPETITION — only content words repeated 4+ times globally
+    const contentWords = wds.filter(w => !STOPWORDS.has(w));
+    const repeatedWords = contentWords.filter(w => globalFreq[w] >= 4 && totalWords > 10);
+    const repRatio = contentWords.length > 0 ? repeatedWords.length / contentWords.length : 0;
+    if (repRatio > 0.65) {
+      penalties += 55;
+      const topRep = [...new Set(repeatedWords)].slice(0,3).join('", "');
+      issues.push(`Heavy word repetition: "${topRep}" — vary your vocabulary.`);
+    } else if (repRatio > 0.4) {
+      penalties += 30;
+      const topRep = [...new Set(repeatedWords)].slice(0,2).join('", "');
+      issues.push(`Repeated words: "${topRep}" — try synonyms.`);
+    } else if (repRatio > 0.25) {
+      penalties += 12;
+      const topRep = [...new Set(repeatedWords)].slice(0,2).join('", "');
+      issues.push(`Some repetition: "${topRep}".`);
+    }
+
+    // 3. WITHIN-SENTENCE repetition — content word used 3+ times in same sentence
+    const localFreq = {};
+    contentWords.forEach(w => { localFreq[w] = (localFreq[w]||0)+1; });
+    const localRepeated = Object.entries(localFreq).filter(([w,c])=>c>=3);
+    if (localRepeated.length > 0) {
+      penalties += localRepeated.length * 18;
+      const rw = localRepeated.map(([w])=>w).slice(0,3).join('", "');
+      issues.push(`Word repeated many times in one sentence: "${rw}".`);
+    }
+
+    // 4. FILLER WORDS
+    const fillerFound = wds.filter(w => FILLER.has(w));
+    const fillerRatio = sentLen > 0 ? fillerFound.length / sentLen : 0;
+    if (fillerRatio > 0.3) {
+      penalties += 30;
+      const fw = [...new Set(fillerFound)].slice(0,3).join('", "');
+      issues.push(`Too many weak/filler words: "${fw}" — be more precise.`);
+    } else if (fillerRatio > 0.18) {
+      penalties += 12;
+      issues.push('Contains some filler words — tighten your language.');
+    }
+
+    // 5. FLOW BONUS
+    const hasTransition = wds.some(w => TRANSITIONS.has(w));
+    if (hasTransition) penalties = Math.max(0, penalties - 15);
+    else if (sentences.length > 3) {
+      penalties += 2; // tiny nudge only for longer texts
+    }
+
+    const score = Math.max(0, Math.min(100, 100 - penalties));
+
+    if (issues.length === 0) {
+      if (score >= 80) issues.push('Great sentence! Good length and flow.');
+      else issues.push('Acceptable sentence.');
+    }
+
+    return { sent, score, issues };
+  });
+
+  const totalScore = scored.length === 0 ? 0 : Math.round(scored.reduce((a,s)=>a+s.score,0) / scored.length);
+
+  // Build highlight layer with hover spans (not marks — marks can't have events)
+  const hlLayer = document.getElementById('wc-highlight-layer');
+  hlLayer.innerHTML = '';
+  hlLayer.style.pointerEvents = 'auto'; // enable hover
+
+  scored.forEach(({sent, score, issues}) => {
+    let bg, border;
+    if (score >= 80)      { bg='rgba(52,211,153,0.30)';  border='#34D399'; }
+    else if (score >= 60) { bg='rgba(251,191,36,0.35)';  border='#FBBF24'; }
+    else if (score >= 40) { bg='rgba(251,146,60,0.40)';  border='#FB923C'; }
+    else                  { bg='rgba(248,113,113,0.45)'; border='#F87171'; }
+
+    const span = document.createElement('span');
+    span.style.cssText = `background:${bg};border-bottom:2.5px solid ${border};border-radius:3px;color:transparent;cursor:pointer;transition:filter 0.15s;`;
+    span.textContent = sent;
+    span.addEventListener('mouseenter', (e) => {
+      span.style.filter = 'brightness(0.88)';
+      showTooltip(span, issues, score, border);
+    });
+    span.addEventListener('mouseleave', () => {
+      span.style.filter = '';
+      hideTooltip();
+    });
+    hlLayer.appendChild(span);
+  });
+
+  const ta = document.getElementById('wc-text');
+  ta.style.background = 'transparent';
+
+  document.getElementById('wc-scan-legend').style.display = 'flex';
+
+  const scorePanel = document.getElementById('wc-score-panel');
+  scorePanel.style.display = 'flex';
+  scorePanel.style.flexDirection = 'column';
+
+  const ringColor = totalScore >= 80 ? '#34D399' : totalScore >= 60 ? '#FBBF24' : totalScore >= 40 ? '#FB923C' : '#F87171';
+  const deg = Math.round(totalScore / 100 * 360);
+  document.getElementById('wc-score-ring').style.background = `conic-gradient(${ringColor} ${deg}deg, #E5E7EB ${deg}deg)`;
+  document.getElementById('wc-score-num').textContent = totalScore;
+  document.getElementById('wc-score-num').style.color = ringColor;
+  const label = totalScore >= 80 ? '✅ Great writing!' : totalScore >= 60 ? '🟡 Pretty good' : totalScore >= 40 ? '🟠 Needs work' : '🔴 Needs revision';
+  document.getElementById('wc-score-label').textContent = label;
+  document.getElementById('wc-score-label').style.color = ringColor;
+
+  const goodCount  = scored.filter(s=>s.score>=80).length;
+  const okCount    = scored.filter(s=>s.score>=60&&s.score<80).length;
+  const poorCount  = scored.filter(s=>s.score>=40&&s.score<60).length;
+  const badCount   = scored.filter(s=>s.score<40).length;
+  function miniBar(label, count, color) {
+    if (!count) return '';
+    return `<div style="display:flex;align-items:center;gap:8px;font-size:12px">
+      <div style="width:10px;height:10px;border-radius:3px;background:${color};flex-shrink:0"></div>
+      <span style="color:var(--muted);font-weight:600;flex:1">${label}</span>
+      <span style="font-weight:800;color:var(--text)">${count} sent.</span>
+    </div>`;
+  }
+  document.getElementById('wc-score-breakdown').innerHTML =
+    miniBar('Good', goodCount, '#34D399') +
+    miniBar('Okay', okCount, '#FBBF24') +
+    miniBar('Needs work', poorCount, '#FB923C') +
+    miniBar('Bad', badCount, '#F87171');
+
+  btn.textContent = '🔍 Scan';
+  btn.disabled = false;
+}
+
+/* ── AGE ── */
+function calcAge() {
+  const dob=new Date(document.getElementById('age-dob').value);
+  const target=new Date(document.getElementById('age-target').value);
+  if(!dob||!target||isNaN(dob)||isNaN(target)) return;
+  let years=target.getFullYear()-dob.getFullYear();
+  let months=target.getMonth()-dob.getMonth();
+  if(months<0||months===0&&target.getDate()<dob.getDate()){years--;months+=12;}
+  if(target.getDate()<dob.getDate()) months=Math.max(0,months-1);
+  const diff=Math.floor((target-dob)/(1000*60*60*24));
+  const weeks=Math.floor(diff/7);
+  const hours=diff*24;
+  const totalMonths=years*12+Math.max(0,months);
+  const nextBday=new Date(target.getFullYear(),dob.getMonth(),dob.getDate());
+  if(nextBday<=target) nextBday.setFullYear(target.getFullYear()+1);
+  const daysTo=Math.floor((nextBday-target)/(1000*60*60*24));
+  document.getElementById('age-years').textContent=years;
+  document.getElementById('age-months').textContent=totalMonths.toLocaleString();
+  document.getElementById('age-weeks').textContent=weeks.toLocaleString();
+  document.getElementById('age-days').textContent=diff.toLocaleString();
+  document.getElementById('age-hours').textContent=hours.toLocaleString();
+  document.getElementById('age-next').textContent=daysTo+' days';
+}
+
+/* ── DISCOUNT ── */
+let _discPct = 25;
+function setDisc(v, el) { _discPct=v; document.querySelectorAll('#page-discount .toggle-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); document.getElementById('d-pct').value=v; calcDiscount(); }
+function calcDiscount() {
+  const price=parseFloat(document.getElementById('d-price').value)||0;
+  const pct=parseFloat(document.getElementById('d-pct').value)||0;
+  const save=price*pct/100; const final=price-save;
+  document.getElementById('d-final').textContent='$'+final.toFixed(2);
+  document.getElementById('d-orig').textContent='$'+price.toFixed(2);
+  document.getElementById('d-save').textContent='$'+save.toFixed(2);
+  document.getElementById('d-amt').textContent='$'+save.toFixed(2);
+}
+
+/* ── BASE64 ── */
+let _b64mode = 'encode';
+function setB64(mode, el) {
+  _b64mode=mode; document.querySelectorAll('#page-base64 .toggle-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel');
+  document.getElementById('b64-in-lbl').textContent=mode==='encode'?'Input Text':'Base64 Input';
+  document.getElementById('b64-out-lbl').textContent=mode==='encode'?'Base64 Output':'Decoded Text';
+  document.getElementById('b64-in').placeholder=mode==='encode'?'Enter text to encode...':'Enter Base64 to decode...';
+  doB64();
+}
+function doB64() {
+  const input=document.getElementById('b64-in').value;
+  document.getElementById('b64-inlen').textContent=input.length+' chars';
+  if(!input.trim()){document.getElementById('b64-out').textContent='—';document.getElementById('b64-outlen').textContent='0 chars';return;}
+  try {
+    const out=_b64mode==='encode'?btoa(unescape(encodeURIComponent(input))):decodeURIComponent(escape(atob(input)));
+    document.getElementById('b64-out').textContent=out;
+    document.getElementById('b64-outlen').textContent=out.length+' chars';
+  } catch(e){document.getElementById('b64-out').textContent='⚠️ Invalid Base64 input';}
+}
+function swapB64() {
+  const out=document.getElementById('b64-out').textContent;
+  if(out==='—'||out.startsWith('⚠️')) return;
+  document.getElementById('b64-in').value=out;
+  doB64();
+}
+
+/* ── HASH GENERATOR ── */
+async function doHash() {
+  const input = document.getElementById('hash-in').value;
+  document.getElementById('hash-inlen').textContent = input.length + ' chars';
+  if (!input.trim()) {
+    ['md5-out','sha1-out','sha256-out','sha512-out'].forEach(id => document.getElementById(id).textContent = '—');
+    return;
+  }
+  const enc = new TextEncoder();
+  const data = enc.encode(input);
+  const algos = [{ id:'sha1-out', name:'SHA-1' }, { id:'sha256-out', name:'SHA-256' }, { id:'sha512-out', name:'SHA-512' }];
+  for (const a of algos) {
+    const buf = await crypto.subtle.digest(a.name, data);
+    document.getElementById(a.id).textContent = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  document.getElementById('md5-out').textContent = md5(input);
+}
+function copyHash(id) { navigator.clipboard.writeText(document.getElementById(id).textContent); }
+function md5(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){var I,d,F,H,x;F=(G&2147483648);H=(k&2147483648);I=(G&1073741824);d=(k&1073741824);x=(G&1073741823)+(k&1073741823);if(I&d){return(x^2147483648^F^H)}if(I|d){if(x&1073741824){return(x^3221225472^F^H)}else{return(x^1073741824^F^H)}}else{return(x^F^H)}}function r(a,b,c,d,e,f,g){a=K(a,K(K((b&c)|(~b&d),e),K(f,g)));return K(L(a,f>>>24&255),b)}function q(a,b,c,d,e,f,g){a=K(a,K(K((b&d)|(c&~d),e),K(f,g)));return K(L(a,f>>>24&255),b)}function p(a,b,c,d,e,f,g){a=K(a,K(K(b^c^d,e),K(f,g)));return K(L(a,f>>>24&255),b)}function n(a,b,c,d,e,f,g){a=K(a,K(K(c^(b|~d),e),K(f,g)));return K(L(a,f>>>24&255),b)}function u(a){var z=a.length,v=[];for(var i=0;i<z;i+=4){v[i>>2]=a.charCodeAt(i)+(a.charCodeAt(i+1)<<8)+(a.charCodeAt(i+2)<<16)+(a.charCodeAt(i+3)<<24)}return v}function e(a){var z,v=[];for(z=0;z<a.length;z+=4){v.push((a[z]&255).toString(16).padStart(2,'0')+((a[z]>>8)&255).toString(16).padStart(2,'0')+((a[z]>>16)&255).toString(16).padStart(2,'0')+((a[z]>>24)&255).toString(16).padStart(2,'0'))}return v.join('')}function t(a){var v='';for(var i=0;i<a.length;i++){var c=a.charCodeAt(i);if(c<128){v+=String.fromCharCode(c)}else if(c<2048){v+=String.fromCharCode((c>>6)|192,c&63|128)}else{v+=String.fromCharCode((c>>12)|224,((c>>6)&63)|128,(c&63)|128)}}return v}a=t(a);var x=u(a+'\x80'.padEnd(Math.ceil((a.length+9)/64)*64-a.length,'\x00'));var len=a.length*8;x[x.length-2]=len&0xffffffff;x[x.length-1]=len/0x100000000;var a0=1732584193,b0=-271733879,c0=-1732584194,d0=271733878;for(var i=0;i<x.length;i+=16){var A=a0,B=b0,C=c0,D=d0;A=r(A,B,C,D,x[i],0x07000000|7,-680876936);D=r(D,A,B,C,x[i+1],0x0c000000|12,-389564586);C=r(C,D,A,B,x[i+2],0x11000000|17,606105819);B=r(B,C,D,A,x[i+3],0x16000000|22,-1044525330);A=r(A,B,C,D,x[i+4],0x07000000|7,-176418897);D=r(D,A,B,C,x[i+5],0x0c000000|12,1200080426);C=r(C,D,A,B,x[i+6],0x11000000|17,-1473231341);B=r(B,C,D,A,x[i+7],0x16000000|22,-45705983);A=r(A,B,C,D,x[i+8],0x07000000|7,1770035416);D=r(D,A,B,C,x[i+9],0x0c000000|12,-1958414417);C=r(C,D,A,B,x[i+10],0x11000000|17,-42063);B=r(B,C,D,A,x[i+11],0x16000000|22,-1990404162);A=r(A,B,C,D,x[i+12],0x07000000|7,1804603682);D=r(D,A,B,C,x[i+13],0x0c000000|12,-40341101);C=r(C,D,A,B,x[i+14],0x11000000|17,-1502002290);B=r(B,C,D,A,x[i+15],0x16000000|22,1236535329);A=q(A,B,C,D,x[i+1],0x05000000|5,-165796510);D=q(D,A,B,C,x[i+6],0x09000000|9,-1069501632);C=q(C,D,A,B,x[i+11],0x0e000000|14,643717713);B=q(B,C,D,A,x[i],0x14000000|20,-373897302);A=q(A,B,C,D,x[i+5],0x05000000|5,-701558691);D=q(D,A,B,C,x[i+10],0x09000000|9,38016083);C=q(C,D,A,B,x[i+15],0x0e000000|14,-660478335);B=q(B,C,D,A,x[i+4],0x14000000|20,-405537848);A=q(A,B,C,D,x[i+9],0x05000000|5,568446438);D=q(D,A,B,C,x[i+14],0x09000000|9,-1019803690);C=q(C,D,A,B,x[i+3],0x0e000000|14,-187363961);B=q(B,C,D,A,x[i+8],0x14000000|20,1163531501);A=q(A,B,C,D,x[i+13],0x05000000|5,-1444681467);D=q(D,A,B,C,x[i+2],0x09000000|9,-51403784);C=q(C,D,A,B,x[i+7],0x0e000000|14,1735328473);B=q(B,C,D,A,x[i+12],0x14000000|20,-1926607734);A=p(A,B,C,D,x[i+5],0x04000000|4,-378558);D=p(D,A,B,C,x[i+8],0x0b000000|11,-2022574463);C=p(C,D,A,B,x[i+11],0x10000000|16,1839030562);B=p(B,C,D,A,x[i+14],0x17000000|23,-35309556);A=p(A,B,C,D,x[i+1],0x04000000|4,-1530992060);D=p(D,A,B,C,x[i+4],0x0b000000|11,1272893353);C=p(C,D,A,B,x[i+7],0x10000000|16,-155497632);B=p(B,C,D,A,x[i+10],0x17000000|23,-1094730640);A=p(A,B,C,D,x[i+13],0x04000000|4,681279174);D=p(D,A,B,C,x[i],0x0b000000|11,-358537222);C=p(C,D,A,B,x[i+3],0x10000000|16,-722521979);B=p(B,C,D,A,x[i+6],0x17000000|23,76029189);A=p(A,B,C,D,x[i+9],0x04000000|4,-640364487);D=p(D,A,B,C,x[i+12],0x0b000000|11,-421815835);C=p(C,D,A,B,x[i+15],0x10000000|16,530742520);B=p(B,C,D,A,x[i+2],0x17000000|23,-995338651);A=n(A,B,C,D,x[i],0x06000000|6,-198630844);D=n(D,A,B,C,x[i+7],0x0a000000|10,1126891415);C=n(C,D,A,B,x[i+14],0x0f000000|15,-1416354905);B=n(B,C,D,A,x[i+5],0x15000000|21,-57434055);A=n(A,B,C,D,x[i+12],0x06000000|6,1700485571);D=n(D,A,B,C,x[i+3],0x0a000000|10,-1894986606);C=n(C,D,A,B,x[i+10],0x0f000000|15,-1051523);B=n(B,C,D,A,x[i+1],0x15000000|21,-2054922799);A=n(A,B,C,D,x[i+8],0x06000000|6,1873313359);D=n(D,A,B,C,x[i+15],0x0a000000|10,-30611744);C=n(C,D,A,B,x[i+6],0x0f000000|15,-1560198380);B=n(B,C,D,A,x[i+13],0x15000000|21,1309151649);A=n(A,B,C,D,x[i+4],0x06000000|6,-145523070);D=n(D,A,B,C,x[i+11],0x0a000000|10,-1120210379);C=n(C,D,A,B,x[i+2],0x0f000000|15,718787259);B=n(B,C,D,A,x[i+9],0x15000000|21,-343485551);a0=K(a0,A);b0=K(b0,B);c0=K(c0,C);d0=K(d0,D)}return e([a0,b0,c0,d0])}
+
+/* ── CURRENCY CONVERTER ── */
+// Rates fetched live from frankfurter.app (free, no key, updates daily)
+let FX = null; // populated on first open
+const FX_NAMES = {USD:'🇺🇸 US Dollar',EUR:'🇪🇺 Euro',GBP:'🇬🇧 British Pound',JPY:'🇯🇵 Japanese Yen',AUD:'🇦🇺 Australian Dollar',CAD:'🇨🇦 Canadian Dollar',CHF:'🇨🇭 Swiss Franc',CNY:'🇨🇳 Chinese Yuan',INR:'🇮🇳 Indian Rupee',MXN:'🇲🇽 Mexican Peso',BRL:'🇧🇷 Brazilian Real',KRW:'🇰🇷 South Korean Won',SGD:'🇸🇬 Singapore Dollar',HKD:'🇭🇰 Hong Kong Dollar',NOK:'🇳🇴 Norwegian Krone',SEK:'🇸🇪 Swedish Krona',DKK:'🇩🇰 Danish Krone',NZD:'🇳🇿 New Zealand Dollar',ZAR:'🇿🇦 South African Rand',THB:'🇹🇭 Thai Baht',AED:'🇦🇪 UAE Dirham',SAR:'🇸🇦 Saudi Riyal',TRY:'🇹🇷 Turkish Lira',PLN:'🇵🇱 Polish Zloty',CZK:'🇨🇿 Czech Koruna',HUF:'🇭🇺 Hungarian Forint',ILS:'🇮🇱 Israeli Shekel',PHP:'🇵🇭 Philippine Peso',MYR:'🇲🇾 Malaysian Ringgit'};
+
+function setFXStatus(msg, isError) {
+  const el = document.getElementById('fx-status');
+  if (el) { el.textContent = msg; el.style.color = isError ? '#F87171' : 'var(--light)'; }
+}
+
+async function buildFXSelects() {
+  // Populate dropdowns immediately so UI isn't blank
+  ['fx-from','fx-to'].forEach((id,i) => {
+    const sel = document.getElementById(id); if (!sel) return; sel.innerHTML = '';
+    Object.entries(FX_NAMES).forEach(([code,name]) => { const o=document.createElement('option'); o.value=code; o.textContent=code+' – '+name.replace(/^\S+\s/,''); sel.appendChild(o); });
+    sel.value = i===0?'USD':'AUD';
+  });
+
+  setFXStatus('⏳ Fetching live rates…', false);
+
+  // Try multiple APIs — different ones have different CORS support
+  const apis = [
+    async () => {
+      const r = await fetch('https://open.er-api.com/v6/latest/USD');
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      if (d.result !== 'success') throw new Error('bad result');
+      return { rates: d.rates, date: d.time_last_update_utc };
+    },
+    async () => {
+      const r = await fetch('https://api.exchangerate.host/latest?base=USD');
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      if (!d.success) throw new Error('bad result');
+      return { rates: d.rates, date: d.date };
+    },
+    async () => {
+      const r = await fetch('https://api.frankfurter.app/latest?base=USD');
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      return { rates: { USD: 1, ...d.rates }, date: d.date };
+    }
+  ];
+
+  let loaded = false;
+  for (const tryApi of apis) {
+    try {
+      const { rates, date } = await tryApi();
+      FX = { USD: 1 };
+      Object.keys(FX_NAMES).forEach(code => { if (rates[code]) FX[code] = rates[code]; });
+      const d = new Date(date);
+      const label = isNaN(d) ? String(date) : d.toLocaleDateString('en-AU', {day:'numeric',month:'short',year:'numeric'});
+      setFXStatus('✅ Live rates · ' + label, false);
+      loaded = true;
+      break;
+    } catch(e) { /* try next */ }
+  }
+
+  if (!loaded) {
+    FX = {USD:1,EUR:0.893,GBP:0.768,JPY:145.2,AUD:1.378,CAD:1.361,CHF:0.901,CNY:7.21,INR:83.5,MXN:17.8,BRL:5.12,KRW:1360,SGD:1.338,HKD:7.79,NOK:10.72,SEK:10.38,DKK:6.87,NZD:1.672,ZAR:18.4,THB:33.8,AED:3.673,SAR:3.750,TRY:38.2,PLN:3.85,CZK:22.5,HUF:362,ILS:3.69,PHP:55.8,MYR:4.43};
+    setFXStatus('⚠️ Offline — using recent rates', true);
+  }
+  calcFX();
+}
+
+function calcFX() {
+  if (!FX) return; // rates not loaded yet
+  const amt=parseFloat(document.getElementById('fx-amt').value)||0;
+  const from=document.getElementById('fx-from').value, to=document.getElementById('fx-to').value;
+  const rate=FX[to]/FX[from], result=amt*rate;
+  document.getElementById('fx-result').textContent=result.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:4});
+  document.getElementById('fx-result-currency').textContent=to;
+  document.getElementById('fx-rate').textContent='1 '+from+' = '+rate.toFixed(6)+' '+to;
+  document.getElementById('fx-rate-inv').textContent='1 '+to+' = '+(1/rate).toFixed(6)+' '+from;
+  document.getElementById('fx-input-echo').textContent=amt.toLocaleString()+' '+from;
+  document.getElementById('fx-output-echo').textContent=result.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' '+to;
+  const tableEl=document.getElementById('fx-table'); tableEl.innerHTML='';
+  ['USD','EUR','GBP','JPY','AUD','CAD','CHF'].filter(c=>c!==from).forEach(c => {
+    const row=document.createElement('div'); row.className='res-row';
+    row.innerHTML=`<span class="res-key">${FX_NAMES[c].replace(/^\S+\s/,'')}</span><span class="res-val">${(amt*FX[c]/FX[from]).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} ${c}</span>`;
+    tableEl.appendChild(row);
+  });
+}
+function swapFX() { const f=document.getElementById('fx-from'),t=document.getElementById('fx-to'),tmp=f.value; f.value=t.value; t.value=tmp; calcFX(); }
+
+/* ── TIME ZONE CONVERTER ── */
+const TZ_ZONES=[{label:'🇺🇸 New York',tz:'America/New_York'},{label:'🇺🇸 Los Angeles',tz:'America/Los_Angeles'},{label:'🇺🇸 Chicago',tz:'America/Chicago'},{label:'🇺🇸 Denver',tz:'America/Denver'},{label:'🇬🇧 London',tz:'Europe/London'},{label:'🇫🇷 Paris',tz:'Europe/Paris'},{label:'🇩🇪 Berlin',tz:'Europe/Berlin'},{label:'🇷🇺 Moscow',tz:'Europe/Moscow'},{label:'🇮🇳 Mumbai',tz:'Asia/Kolkata'},{label:'🇨🇳 Beijing',tz:'Asia/Shanghai'},{label:'🇯🇵 Tokyo',tz:'Asia/Tokyo'},{label:'🇸🇬 Singapore',tz:'Asia/Singapore'},{label:'🇦🇪 Dubai',tz:'Asia/Dubai'},{label:'🇦🇺 Sydney',tz:'Australia/Sydney'},{label:'🇦🇺 Melbourne',tz:'Australia/Melbourne'},{label:'🇳🇿 Auckland',tz:'Pacific/Auckland'},{label:'🇧🇷 São Paulo',tz:'America/Sao_Paulo'},{label:'🇲🇽 Mexico City',tz:'America/Mexico_City'},{label:'🇨🇦 Toronto',tz:'America/Toronto'},{label:'🇿🇦 Johannesburg',tz:'Africa/Johannesburg'},{label:'🇳🇬 Lagos',tz:'Africa/Lagos'},{label:'🇪🇬 Cairo',tz:'Africa/Cairo'},{label:'🇹🇭 Bangkok',tz:'Asia/Bangkok'},{label:'🇰🇷 Seoul',tz:'Asia/Seoul'},{label:'🇵🇰 Karachi',tz:'Asia/Karachi'}];
+let _tzInterval = null;
+function buildTZSelects() {
+  ['tz-from','tz-to'].forEach((id,i) => {
+    const sel=document.getElementById(id); if(!sel) return; sel.innerHTML='';
+    TZ_ZONES.forEach((z,idx)=>{ const o=document.createElement('option'); o.value=idx; o.textContent=z.label; sel.appendChild(o); });
+    sel.selectedIndex=i===0?4:13;
+  });
+  if (_tzInterval) clearInterval(_tzInterval);
+  updateTZ();
+  _tzInterval=setInterval(updateTZ,1000);
+}
+function updateTZ() {
+  const fi=parseInt(document.getElementById('tz-from')?.value||4);
+  const ti=parseInt(document.getElementById('tz-to')?.value||13);
+  const fz=TZ_ZONES[fi], tz=TZ_ZONES[ti], now=new Date();
+  const fmtT=z=>now.toLocaleTimeString('en-US',{timeZone:z,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const fmtD=z=>now.toLocaleDateString('en-US',{timeZone:z,weekday:'short',month:'short',day:'numeric'});
+  const fmtO=z=>now.toLocaleString('en-US',{timeZone:z,timeZoneName:'short'}).split(' ').pop();
+  document.getElementById('tz-from-label').textContent=fz.label;
+  document.getElementById('tz-from-time').textContent=fmtT(fz.tz);
+  document.getElementById('tz-from-date').textContent=fmtD(fz.tz);
+  document.getElementById('tz-from-offset').textContent=fmtO(fz.tz);
+  document.getElementById('tz-to-label').textContent=tz.label;
+  document.getElementById('tz-to-time').textContent=fmtT(tz.tz);
+  document.getElementById('tz-to-date').textContent=fmtD(tz.tz);
+  document.getElementById('tz-to-offset').textContent=fmtO(tz.tz);
+  calcTZCustom();
+}
+function calcTZCustom() {
+  const inp=document.getElementById('tz-custom-time')?.value;
+  if(!inp){document.getElementById('tz-custom-result').textContent='—';return;}
+  try {
+    const ti=parseInt(document.getElementById('tz-to').value||13);
+    const dt=new Date(new Date().toISOString().slice(0,10)+'T'+inp+':00');
+    document.getElementById('tz-custom-result').textContent=dt.toLocaleTimeString('en-US',{timeZone:TZ_ZONES[ti].tz,hour:'2-digit',minute:'2-digit'})+' · '+dt.toLocaleDateString('en-US',{timeZone:TZ_ZONES[ti].tz,weekday:'short',month:'short',day:'numeric'});
+  } catch(e){document.getElementById('tz-custom-result').textContent='—';}
+}
+function swapTZ() { const f=document.getElementById('tz-from'),t=document.getElementById('tz-to'),tmp=f.value; f.value=t.value; t.value=tmp; updateTZ(); }
+
+/* ── GRADIENT GENERATOR ── */
+let _gradColors=['#A78BFA','#F9A8D4'], _gradType='linear', _gradAngle=135;
+function updateGradientCSS() {
+  const stops=_gradColors.join(', ');
+  const css=_gradType==='linear'?`linear-gradient(${_gradAngle}deg, ${stops})`:_gradType==='radial'?`radial-gradient(circle, ${stops})`:`conic-gradient(from ${_gradAngle}deg, ${stops})`;
+  document.getElementById('grad-preview').style.background=css;
+  document.getElementById('grad-css-out').textContent=`background: ${css};`;
+}
+function setGradType(t,el) {
+  _gradType=t; document.querySelectorAll('#page-gradient .toggle-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel');
+  document.getElementById('grad-angle-wrap').style.display=(t==='radial')?'none':'';
+  updateGradientCSS();
+}
+function setGradAngle(v) { _gradAngle=v; document.getElementById('grad-angle-val').textContent=v+'°'; updateGradientCSS(); }
+function updateGradColor(i,val) { _gradColors[i]=val; renderGradStops(); updateGradientCSS(); }
+function addGradStop() { if(_gradColors.length>=6) return; _gradColors.push('#60A5FA'); renderGradStops(); updateGradientCSS(); }
+function removeGradStop(i) { if(_gradColors.length<=2) return; _gradColors.splice(i,1); renderGradStops(); updateGradientCSS(); }
+function renderGradStops() {
+  const cont=document.getElementById('grad-stops'); if(!cont) return; cont.innerHTML='';
+  _gradColors.forEach((c,i)=>{
+    const row=document.createElement('div'); row.style.cssText='display:flex;align-items:center;gap:10px;margin-bottom:8px';
+    row.innerHTML=`<input type="color" value="${c}" oninput="updateGradColor(${i},this.value)" style="width:48px;height:40px;border:none;border-radius:12px;cursor:pointer;padding:3px;background:transparent"><input class="nice-input" type="text" value="${c}" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){updateGradColor(${i},this.value)}" style="flex:1;font-family:monospace;font-size:13px">${_gradColors.length>2?`<button onclick="removeGradStop(${i})" style="background:var(--rose-l);border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:13px;color:var(--rose-d);font-weight:700">✕</button>`:''}`;
+    cont.appendChild(row);
+  });
+}
+function copyGradCSS() { navigator.clipboard.writeText(document.getElementById('grad-css-out').textContent); }
+const GRAD_PRESETS=[['#A78BFA','#F9A8D4'],['#F9A8D4','#FCA5A5'],['#6EE7B7','#60A5FA'],['#FCD34D','#FB923C'],['#818CF8','#C084FC'],['#34D399','#059669'],['#F472B6','#A78BFA','#60A5FA'],['#FDE68A','#FCA5A5','#C4B5FD']];
+function buildGradPresets() {
+  const cont=document.getElementById('grad-presets'); if(!cont) return; cont.innerHTML='';
+  GRAD_PRESETS.forEach(colors=>{
+    const btn=document.createElement('button');
+    btn.style.cssText=`width:44px;height:44px;border-radius:12px;border:2px solid transparent;cursor:pointer;flex-shrink:0;background:linear-gradient(135deg,${colors.join(',')});transition:transform 0.12s`;
+    btn.onmouseenter=()=>btn.style.transform='scale(1.1)';
+    btn.onmouseleave=()=>btn.style.transform='';
+    btn.onclick=()=>{_gradColors=[...colors];renderGradStops();updateGradientCSS();};
+    cont.appendChild(btn);
+  });
+}
+
+/* ── PROFILE / AUTH ── */
+let _authTab = 'login';
+let _currentUser = null;
+
+(function initAuth() {
+  try {
+    const saved = localStorage.getItem('tk_user');
+    if (saved) { _currentUser = JSON.parse(saved); }
+  } catch(e) {}
+})();
+
+window.addEventListener('load', function() {
+  updateAvatarState();
+});
+
+function openProfileModal() {
+  const overlay = document.getElementById('profile-modal');
+  if (_currentUser) {
+    document.getElementById('auth-view').style.display = 'none';
+    document.getElementById('profile-view').style.display = 'block';
+    document.getElementById('profile-name-display').textContent = _currentUser.username;
+    document.getElementById('profile-avatar-lg').textContent = _currentUser.username.charAt(0).toUpperCase();
+  } else {
+    document.getElementById('auth-view').style.display = 'block';
+    document.getElementById('profile-view').style.display = 'none';
+    switchTab('login');
+  }
+  overlay.classList.add('open');
+}
+
+function closeProfileModal(e) {
+  if (e && e.target !== document.getElementById('profile-modal')) return;
+  document.getElementById('profile-modal').classList.remove('open');
+  clearAuthMessages();
+}
+
+function switchTab(tab) {
+  _authTab = tab;
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('field-username-login').style.display = tab === 'login' ? 'flex' : 'none';
+  document.getElementById('field-username-signup').style.display = tab === 'signup' ? 'flex' : 'none';
+  document.getElementById('field-confirm').style.display = tab === 'signup' ? 'flex' : 'none';
+  document.getElementById('auth-submit-btn').textContent = tab === 'login' ? 'Log In' : 'Create Account';
+  document.getElementById('auth-sub').textContent = tab === 'login' ? 'Sign in to your ToolKit account' : 'Create your ToolKit account';
+  clearAuthMessages();
+}
+
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = '⚠️ ' + msg; el.style.display = 'block';
+  document.getElementById('auth-success').style.display = 'none';
+}
+function showAuthSuccess(msg) {
+  const el = document.getElementById('auth-success');
+  el.textContent = '✅ ' + msg; el.style.display = 'block';
+  document.getElementById('auth-error').style.display = 'none';
+}
+function clearAuthMessages() {
+  document.getElementById('auth-error').style.display = 'none';
+  document.getElementById('auth-success').style.display = 'none';
+}
+
+function handleAuth() {
+  const password = document.getElementById('inp-password').value;
+  if (password.length < 6) { showAuthError('Password must be at least 6 characters.'); return; }
+
+  if (_authTab === 'signup') {
+    const username = document.getElementById('inp-username').value.trim();
+    const confirm = document.getElementById('inp-confirm').value;
+    if (!username) { showAuthError('Please choose a username.'); return; }
+    if (username.length < 2) { showAuthError('Username must be at least 2 characters.'); return; }
+    if (password !== confirm) { showAuthError('Passwords do not match.'); return; }
+    const existing = JSON.parse(localStorage.getItem('tk_accounts') || '[]');
+    if (existing.find(a => a.username.toLowerCase() === username.toLowerCase())) { showAuthError('That username is already taken.'); return; }
+    existing.push({ username, password });
+    localStorage.setItem('tk_accounts', JSON.stringify(existing));
+    _currentUser = { username };
+    localStorage.setItem('tk_user', JSON.stringify(_currentUser));
+    updateAvatarState();
+    showAuthSuccess('Account created! Welcome, ' + username + ' ✦');
+    setTimeout(() => document.getElementById('profile-modal').classList.remove('open'), 1200);
+  } else {
+    const username = document.getElementById('inp-login-username').value.trim();
+    if (!username) { showAuthError('Please enter your username.'); return; }
+    const accounts = JSON.parse(localStorage.getItem('tk_accounts') || '[]');
+    const match = accounts.find(a => a.username.toLowerCase() === username.toLowerCase() && a.password === password);
+    if (!match) { showAuthError('Incorrect username or password.'); return; }
+    _currentUser = { username: match.username };
+    localStorage.setItem('tk_user', JSON.stringify(_currentUser));
+    updateAvatarState();
+    showAuthSuccess('Welcome back, ' + match.username + '! ✦');
+    setTimeout(() => document.getElementById('profile-modal').classList.remove('open'), 1000);
+  }
+}
+
+function handleLogout() {
+  _currentUser = null;
+  localStorage.removeItem('tk_user');
+  updateAvatarState();
+  document.getElementById('profile-modal').classList.remove('open');
+}
+
+function updateAvatarState() {
+  const btn = document.getElementById('avatar-btn');
+  if (!btn) return;
+  if (_currentUser) {
+    btn.classList.add('logged-in');
+    btn.textContent = _currentUser.username.charAt(0).toUpperCase();
+    btn.title = _currentUser.username;
+  } else {
+    btn.classList.remove('logged-in');
+    btn.textContent = '🌸';
+    btn.title = 'Profile';
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('profile-modal').classList.remove('open');
+});
+
+
+/* ── MOBILE NAV ── */
+function isMobile() { return window.innerWidth <= 768; }
+
+function mobileNav(id) {
+  if (id === 'home') {
+    showHome();
+  } else {
+    openTool(id);
+  }
+  // Update active state on bottom nav
+  document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  const map = { home:'mnav-home', tip:'mnav-calc', loan:'mnav-calc', discount:'mnav-calc', bmi:'mnav-calc', age:'mnav-calc', unit:'mnav-convert', currency:'mnav-convert', timezone:'mnav-convert', word:'mnav-convert', color:'mnav-design', gradient:'mnav-design' };
+  const btn = document.getElementById(map[id] || 'mnav-home');
+  if (btn) btn.classList.add('active');
+}
+
+function mobileOpenTool(id) {
+  closeMobileDrawer();
+  openTool(id);
+  // Mark "more" as active since tool came from drawer
+  document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('mnav-more').classList.add('active');
+}
+
+function openMobileDrawer() {
+  document.getElementById('mobile-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileDrawer() {
+  document.getElementById('mobile-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Reset mobile nav highlight when showHome is called
+const _origShowHome = showHome;
+showHome = function(navEl) {
+  _origShowHome(navEl);
+  if (isMobile()) {
+    document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('mnav-home').classList.add('active');
+  }
+};
+
+</script>
+
+<!-- PROFILE MODAL -->
+<div class="modal-overlay" id="profile-modal" onclick="closeProfileModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeProfileModal()">✕</button>
+
+    <!-- Logged-out view -->
+    <div id="auth-view">
+      <div class="modal-title">ToolKit Account ✦</div>
+      <div class="modal-sub" id="auth-sub">Sign in to your ToolKit account</div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
+        <button class="modal-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+      <div class="modal-form">
+        <div class="modal-error" id="auth-error"></div>
+        <div class="modal-success" id="auth-success"></div>
+        <div class="field" id="field-username-login">
+          <div class="field-label">Username</div>
+          <input class="nice-input" type="text" id="inp-login-username" placeholder="Your username">
+        </div>
+        <div class="field" id="field-username-signup" style="display:none">
+          <div class="field-label">Choose a Username</div>
+          <input class="nice-input" type="text" id="inp-username" placeholder="e.g. coolperson42">
+        </div>
+<div class="field">
+          <div class="field-label">Password</div>
+          <input class="nice-input" type="password" id="inp-password" placeholder="••••••••">
+        </div>
+        <div class="field" id="field-confirm" style="display:none">
+          <div class="field-label">Confirm Password</div>
+          <input class="nice-input" type="password" id="inp-confirm" placeholder="••••••••">
+        </div>
+        <button class="action-btn" id="auth-submit-btn" onclick="handleAuth()">Log In</button>
+      </div>
+    </div>
+
+    <!-- Logged-in view -->
+    <div id="profile-view" style="display:none">
+      <div class="profile-avatar-lg" id="profile-avatar-lg">🌸</div>
+      <div class="profile-name" id="profile-name-display">—</div>
+      <button class="action-btn" onclick="handleLogout()" style="background:linear-gradient(135deg,#F43F5E,#E11D48)">Log Out</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-btn active" id="mnav-home" onclick="mobileNav('home')">
+    <div class="mnav-icon">🏠</div>
+    <span class="mnav-label">Home</span>
+  </button>
+  <button class="mobile-nav-btn" id="mnav-calc" onclick="mobileNav('tip')">
+    <div class="mnav-icon">🧮</div>
+    <span class="mnav-label">Calculate</span>
+  </button>
+  <button class="mobile-nav-btn" id="mnav-convert" onclick="mobileNav('unit')">
+    <div class="mnav-icon">⚖️</div>
+    <span class="mnav-label">Convert</span>
+  </button>
+  <button class="mobile-nav-btn" id="mnav-design" onclick="mobileNav('gradient')">
+    <div class="mnav-icon">🎨</div>
+    <span class="mnav-label">Design</span>
+  </button>
+  <button class="mobile-nav-btn" id="mnav-more" onclick="openMobileDrawer()">
+    <div class="mnav-icon">⋯</div>
+    <span class="mnav-label">More</span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER (all tools) -->
+<div class="mobile-drawer" id="mobile-drawer">
+  <div class="mobile-drawer-overlay" onclick="closeMobileDrawer()"></div>
+  <div class="mobile-drawer-panel">
+    <div class="mobile-drawer-handle"></div>
+
+    <div class="mobile-drawer-section">Calculate</div>
+    <div class="mobile-drawer-grid">
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('tip')"><span>🍽️</span><span>Tip Calc</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('loan')"><span>🏦</span><span>Loan Calc</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('discount')"><span>🏷️</span><span>Discount</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('bmi')"><span>💪</span><span>BMI</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('age')"><span>🎂</span><span>Age Calc</span></button>
+    </div>
+
+    <div class="mobile-drawer-section">Convert & Create</div>
+    <div class="mobile-drawer-grid">
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('unit')"><span>⚖️</span><span>Unit Conv.</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('currency')"><span>💱</span><span>Currency</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('timezone')"><span>🌍</span><span>Time Zone</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('word')"><span>📝</span><span>Word Count</span></button>
+    </div>
+
+    <div class="mobile-drawer-section">Security</div>
+    <div class="mobile-drawer-grid">
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('password')"><span>🔐</span><span>Password</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('base64')"><span>🔤</span><span>Base64</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('hash')"><span>🔒</span><span>Hash Gen</span></button>
+    </div>
+
+    <div class="mobile-drawer-section">Design</div>
+    <div class="mobile-drawer-grid">
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('color')"><span>🎨</span><span>Color Picker</span></button>
+      <button class="mobile-drawer-item" onclick="mobileOpenTool('gradient')"><span>🌈</span><span>Gradient</span></button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
